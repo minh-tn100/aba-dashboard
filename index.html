@@ -33,7 +33,8 @@
   .card-wk{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-light);}
   .card-n{font-size:30px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em;}
   .card-topic{font-size:12px;color:var(--text);font-weight:600;line-height:1.35;min-height:32px;}
-  .card-date{font-size:10.5px;color:var(--text-light);}
+  .card-fw{font-size:10px;color:var(--navy-light);font-weight:600;line-height:1.3;}
+  .card-date{font-size:10.5px;color:var(--text-light);margin-top:2px;}
   .pill{position:absolute;top:14px;right:13px;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:10px;}
   .pill-active{background:rgba(42,157,143,.15);color:var(--success);border:1px solid rgba(42,157,143,.35);}
   .pill-ready{background:rgba(247,147,30,.14);color:#a06800;border:1px solid rgba(247,147,30,.4);}
@@ -67,10 +68,34 @@
 const START = new Date(2026, 5, 8);   // Mon 8 Jun 2026 (month index 5 = June)
 const TOTAL = 30;                     // Week 30 = Mon 28 Dec 2026 → Sun 3 Jan 2027 (covers all of 2026)
 
-// Built dashboards (topic + file). Everything else is auto-marked "Planned".
+// Topic plan (YouTube topic per week) from p01-content-calendar-25weeks.pdf.
+// `file` = a built dashboard exists (clickable); otherwise the card opens the "planned" page.
 const META = {
-  1: {topic:'Most AI ROI Claims Are Accounting Fiction',                          file:'week1-publishing-schedule-dashboard.html'},
-  2: {topic:'The Agent Maturity Ladder — How Far Should a Bank Let AI Act?',       file:'week2-publishing-schedule-dashboard.html'},
+  1:  {topic:'Most AI ROI Claims Are Accounting Fiction',                    fw:'AI ROI in Banking: The Boardroom Equation', file:'week1-publishing-schedule-dashboard.html'},
+  2:  {topic:'How Far Should a Bank Let AI Act on Its Own?',                  fw:'The Agent Maturity Ladder (L1–L4)',          file:'week2-publishing-schedule-dashboard.html'},
+  3:  {topic:'The Governance That Lets Banks Move Fast',                     fw:'The 4 Stone Guardians'},
+  4:  {topic:"Most Banking AI Is Deployed Where the Money Isn't",            fw:'The 3 Value Zones'},
+  5:  {topic:'Why the Same AI Returns 5% at One Bank, 20% at Another',       fw:'The Operating-Model Multiplier (4 levers)'},
+  6:  {topic:'Stop Building Your Own Banking AI',                            fw:'The Build-Buy-Partner Grid'},
+  7:  {topic:'One Human, Thirty Agents: the Next Bank Operating Model',      fw:'The Agent Army Operating Model'},
+  8:  {topic:'Stop Funding AI Pilots — Run the Portfolio Test',             fw:'The AI Use-Case Portfolio'},
+  9:  {topic:"Your Data Isn't AI-Ready — and No Model Will Fix That",        fw:'AI-Ready Business Architecture'},
+  10: {topic:"Vietnam's AI Law Hits March 2026 — Are You Ready?",           fw:'Regulatory Readiness Map'},
+  11: {topic:'Your AI Model-Risk Framework Has a GenAI Hole',               fw:'Model-Risk Tiering Grid (GenAI-extended)'},
+  12: {topic:'The #1 AI Security Hole in Your Bank',                        fw:'The Agent Attack-Surface Map'},
+  13: {topic:'When the Algorithm Denies the Loan',                         fw:'The Adverse-Action Explainability Ladder'},
+  14: {topic:"You Don't Own Your AI — That's a Systemic Risk",              fw:'The Vendor Concentration Heatmap'},
+  15: {topic:"Why Your Bank's AI Hallucinates",                            fw:'The Grounded-Knowledge Architecture'},
+  16: {topic:'Your AI Bill Is About to Explode',                           fw:'The AI Unit-Economics Ledger'},
+  17: {topic:'AML That Catches More and Costs Less',                       fw:'The Risk-Intelligence Stack'},
+  18: {topic:'The AI Credit Memo: Faster, Auditable',                      fw:'The Underwriting Augmentation Model'},
+  19: {topic:'The Bank Copilot Customers Actually Trust',                  fw:'The Trust-First CX Loop'},
+  20: {topic:'Real-Time Payments, Real-Time Fraud',                        fw:'The Payments Defense Grid'},
+  21: {topic:'Can AI Run the Treasury Desk?',                             fw:'The ALM Decision-Support Map'},
+  22: {topic:'The AI Private Banker',                                      fw:'The Advisory Augmentation Ladder'},
+  23: {topic:"If You Can't Evaluate It, You Can't Deploy It",              fw:'The AI Evaluation Gate'},
+  24: {topic:'Why AI Fails at the Last Mile: Adoption',                    fw:'The Adoption Multiplier'},
+  25: {topic:'What the AI-Native Bank Looks Like in 2030',                 fw:'The AI-Native Bank Blueprint'},
 };
 
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -99,6 +124,7 @@ for (let n=1; n<=TOTAL; n++){
   const href   = hasFile ? meta.file : ('week-coming-soon.html?w='+n);
   const topic  = (meta && meta.topic) ? meta.topic
                : '<span style="color:#aab4c4;font-style:italic;font-weight:400;">Topic to be planned</span>';
+  const fwLine = (meta && meta.fw) ? `<span class="card-fw">▸ ${meta.fw}</span>` : '';
 
   const el = document.createElement('a');
   el.className = 'card ' + status;
@@ -109,6 +135,7 @@ for (let n=1; n<=TOTAL; n++){
     `<span class="card-wk">Week</span>`+
     `<span class="card-n">${n}</span>`+
     `<span class="card-topic">${topic}</span>`+
+    fwLine +
     `<span class="card-date">${fmtRange(mondayOf(n))}</span>`;
   grid.appendChild(el);
 }

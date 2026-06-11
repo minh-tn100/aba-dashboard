@@ -24,9 +24,10 @@
   <div class="vib-badge">AI Business Architect</div>
   <div class="wk">Week</div>
   <div class="n" id="wkN">–</div>
-  <h1>This week is being planned</h1>
-  <p>The topic, framework and 9-asset publishing package for this week are entered through the P01 Content Multiplier pipeline.</p>
-  <p>Once the topic seed is approved, this dashboard fills with the YouTube video, five LinkedIn posts, the website article, the newsletter and the lead magnet.</p>
+  <h1 id="wkTopic">This week is being planned</h1>
+  <p id="wkFw" style="color:var(--yellow);font-weight:600;font-size:13px;margin-bottom:14px;"></p>
+  <p>The topic and framework are locked. The 9-asset publishing package is produced through the P01 Content Multiplier pipeline.</p>
+  <p>Once produced, this dashboard fills with the YouTube video, five LinkedIn posts, the website article, the newsletter and the lead magnet.</p>
   <div class="date" id="wkDate"></div>
   <a class="btn" href="index.html">🏠 Main page</a>
 </div>
@@ -42,10 +43,40 @@
     if (sY===eY)            return `${start.getDate()} ${sM}–${end.getDate()} ${eM} ${sY}`;
     return `${start.getDate()} ${sM} ${sY}–${end.getDate()} ${eM} ${eY}`;
   }
+  // Topic plan (must match index.html META) — from p01-content-calendar-25weeks.pdf
+  const TOPICS = {
+    3:['The Governance That Lets Banks Move Fast','The 4 Stone Guardians'],
+    4:["Most Banking AI Is Deployed Where the Money Isn't",'The 3 Value Zones'],
+    5:['Why the Same AI Returns 5% at One Bank, 20% at Another','The Operating-Model Multiplier (4 levers)'],
+    6:['Stop Building Your Own Banking AI','The Build-Buy-Partner Grid'],
+    7:['One Human, Thirty Agents: the Next Bank Operating Model','The Agent Army Operating Model'],
+    8:['Stop Funding AI Pilots — Run the Portfolio Test','The AI Use-Case Portfolio'],
+    9:["Your Data Isn't AI-Ready — and No Model Will Fix That",'AI-Ready Business Architecture'],
+    10:["Vietnam's AI Law Hits March 2026 — Are You Ready?",'Regulatory Readiness Map'],
+    11:['Your AI Model-Risk Framework Has a GenAI Hole','Model-Risk Tiering Grid (GenAI-extended)'],
+    12:['The #1 AI Security Hole in Your Bank','The Agent Attack-Surface Map'],
+    13:['When the Algorithm Denies the Loan','The Adverse-Action Explainability Ladder'],
+    14:["You Don't Own Your AI — That's a Systemic Risk",'The Vendor Concentration Heatmap'],
+    15:["Why Your Bank's AI Hallucinates",'The Grounded-Knowledge Architecture'],
+    16:['Your AI Bill Is About to Explode','The AI Unit-Economics Ledger'],
+    17:['AML That Catches More and Costs Less','The Risk-Intelligence Stack'],
+    18:['The AI Credit Memo: Faster, Auditable','The Underwriting Augmentation Model'],
+    19:['The Bank Copilot Customers Actually Trust','The Trust-First CX Loop'],
+    20:['Real-Time Payments, Real-Time Fraud','The Payments Defense Grid'],
+    21:['Can AI Run the Treasury Desk?','The ALM Decision-Support Map'],
+    22:['The AI Private Banker','The Advisory Augmentation Ladder'],
+    23:["If You Can't Evaluate It, You Can't Deploy It",'The AI Evaluation Gate'],
+    24:['Why AI Fails at the Last Mile: Adoption','The Adoption Multiplier'],
+    25:['What the AI-Native Bank Looks Like in 2030','The AI-Native Bank Blueprint'],
+  };
   if(w){
     document.getElementById('wkN').textContent = w;
     const start = new Date(START); start.setDate(START.getDate() + (w-1)*7);
     document.getElementById('wkDate').textContent = fmtRange(start);
+    if(TOPICS[w]){
+      document.getElementById('wkTopic').textContent = TOPICS[w][0];
+      document.getElementById('wkFw').textContent = '▸ ' + TOPICS[w][1];
+    }
   }
 </script>
 </body>
