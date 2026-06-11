@@ -152,7 +152,7 @@
   <div class="leg"><div class="dot" style="background:var(--ch-lp)"></div>LI Company Page</div>
   <div class="leg"><div class="dot" style="background:var(--ch-web)"></div>Website</div>
   <div class="leg"><div class="dot" style="background:var(--ch-nl)"></div>Newsletter</div>
-  <div class="leg"><div class="dot" style="background:var(--ch-setup)"></div>Setup</div>
+  <div class="leg"><div class="dot" style="background:var(--ch-setup)"></div>Setup / Prod</div>
   <div class="status-pills">
     <span class="badge b-published">✓ Published</span>
     <span class="badge b-scheduled">⏱ Scheduled</span>
@@ -216,6 +216,14 @@
   <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
   <div class="cell"><div class="blocker-banner">⚠ Email must be live before Sat newsletter send</div></div>
   <div class="cell empty"></div>
+
+  <!-- Production · prepare NEXT week's video (Week 2 launches Mon 15 Jun) -->
+  <div class="ch-lbl" style="color:var(--ch-setup);font-size:8.5px;line-height:1.3;text-align:right;padding-right:7px;">Prod<br>W2</div>
+  <div class="cell empty"></div><div class="cell empty"></div>
+  <div class="cell"><div class="task ch-setup" onclick="openModal('w2-video')"><div class="t-time">🎬 W2 VIDEO</div><div class="t-title">Prep Week 2 video</div><div class="t-sub">Render 64 Style-D clips + VO master</div><div class="t-bw"><span class="badge" id="b-w2-video"></span></div></div></div>
+  <div class="cell"><div class="task ch-setup" onclick="openModal('w2-reg')"><div class="t-time">⚠ VERIFY</div><div class="t-title">Verify Week 2 reg FACTs</div><div class="t-sub">SR 26-2 · EU AI Act · fines · BNPL</div><div class="t-bw"><span class="badge" id="b-w2-reg"></span></div></div></div>
+  <div class="cell"><div class="blocker-banner">⚠ Week 2 video + VO + reg-check must finish before Mon 15 launch</div></div>
+  <div class="cell empty"></div><div class="cell empty"></div>
 
   <!-- Notes -->
   <div class="ch-lbl" style="font-size:9px">Notes</div>
@@ -284,6 +292,8 @@ const TASKS = {
   'dl1':    {title:'The Boardroom Equation — 1-Page PDF',    meta:'Thu 11 Jun · Lead magnet · subscriber download · aibusinessarchitect.ai',           ch:'Website'},
   'nl1':    {title:'Newsletter Issue #001',                  meta:'Sat 13 Jun · 8:00 AM · The AI Architect Letter · Beehiiv',                          ch:'Newsletter'},
   'email1': {title:'Set up ABA Email',                       meta:'Mon 8 Jun · hello@aibusinessarchitect.ai · blocker for newsletter',                  ch:'Setup'},
+  'w2-video':{title:'Prep Week 2 Video',                     meta:'This week · Render 64 Style-D clips + VO master · The Agent Maturity Ladder · for Mon 15 Jun launch', ch:'Production'},
+  'w2-reg':  {title:'Verify Week 2 Regulatory FACTs',        meta:'This week · SR 26-2 · EU AI Act · $881M/$187M fines · BNPL · COiN · before Week 2 publish', ch:'Production'},
 };
 
 const SM = {
@@ -315,13 +325,15 @@ const SEED = {
   'dl1':    {status:'published',  url:'', notes:'Published Thu 11 Jun · Boardroom Equation 1-page PDF · lead magnet live'},
   'nl1':    {status:'scheduled',  url:'', notes:''},
   'email1': {status:'published',  url:'', notes:'Done Mon 8 Jun · Newsletter blocker cleared'},
+  'w2-video':{status:'in-progress',url:'', notes:'Style D 64-scene plan locked · prompts ready (07) · render + VO master pending · target before Mon 15 Jun'},
+  'w2-reg':  {status:'pending',    url:'', notes:'R1 · verify regulatory FACTs against primary sources before Week 2 publish'},
 };
 
 const PUBLISHED_IDS = ['yt1','li-a','lp-a','email1','li-b','lp-b','li-c','lp-c','web1','li-d','lp-d','dl1'];
 
 let state = {};
 try {
-  const s = localStorage.getItem('aba-w1-v4');
+  const s = localStorage.getItem('aba-w1-v5');
   if (s) {
     state = JSON.parse(s);
     PUBLISHED_IDS.forEach(id => {
@@ -337,7 +349,7 @@ Object.keys(TASKS).forEach(id => { if (!state[id]) state[id] = JSON.parse(JSON.s
 let cur = null;
 
 function persist() {
-  try { localStorage.setItem('aba-w1-v4', JSON.stringify(state)); } catch(e){}
+  try { localStorage.setItem('aba-w1-v5', JSON.stringify(state)); } catch(e){}
   const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   document.getElementById('savedTs').textContent  = 'Last updated: ' + ts;
   document.getElementById('savedTs2').textContent = 'Last updated: ' + ts;
