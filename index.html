@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publishing Dashboards · AI Business Architect</title>
+<style>
+  :root{
+    --navy:#1a2b5f; --navy-dark:#0f1a3d; --navy-light:#2a3f7a;
+    --orange:#f7931e; --yellow:#ffc629; --gradient:linear-gradient(135deg,#f7931e 0%,#ffc629 100%);
+    --white:#fff; --gray-light:#f5f7fa; --gray:#e8ecf1; --text:#333; --text-light:#666;
+    --success:#2a9d8f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif;background:var(--gray-light);color:var(--text);font-size:13px;line-height:1.6;min-height:100vh;}
+
+  .header{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);color:#fff;padding:30px 22px 24px;}
+  .vib-badge{display:inline-block;background:var(--gradient);color:var(--navy-dark);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px;}
+  .header h1{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px;}
+  .header .sub{font-size:13px;opacity:.82;}
+
+  .wrap{max-width:1060px;margin:0 auto;padding:26px 22px 50px;}
+  .sec-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-light);margin:0 0 14px;display:flex;align-items:center;gap:8px;}
+  .sec-lbl::before{content:'';width:14px;height:3px;background:var(--gradient);border-radius:2px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+  .card{position:relative;display:flex;flex-direction:column;gap:6px;background:var(--white);border:1px solid var(--gray);border-radius:14px;padding:18px 16px 16px;text-decoration:none;color:inherit;box-shadow:0 2px 10px rgba(15,26,61,.05);transition:all .2s ease;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--gray);}
+  .card.ready::before{background:var(--gradient);}
+  .card.active::before{background:var(--success);}
+  .card.ready:hover,.card.active:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,26,61,.12);border-color:var(--orange);}
+  .card.soon{opacity:.62;cursor:not-allowed;}
+  .card-wk{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-light);}
+  .card-n{font-size:30px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em;}
+  .card-topic{font-size:12px;color:var(--text);font-weight:600;line-height:1.35;min-height:32px;}
+  .card-date{font-size:10.5px;color:var(--text-light);}
+  .pill{position:absolute;top:14px;right:13px;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:10px;}
+  .pill-active{background:rgba(42,157,143,.15);color:var(--success);border:1px solid rgba(42,157,143,.35);}
+  .pill-ready{background:rgba(247,147,30,.14);color:#a06800;border:1px solid rgba(247,147,30,.4);}
+  .pill-soon{background:var(--gray);color:var(--text-light);}
+
+  .foot{margin-top:30px;font-size:11px;color:var(--text-light);border-top:1px solid var(--gray);padding-top:14px;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="vib-badge">AI Business Architect</div>
+  <h1>Publishing Dashboards</h1>
+  <div class="sub">One dashboard per week — click a week to open its publishing schedule. New issue every Saturday.</div>
+</div>
+
+<div class="wrap">
+  <div class="sec-lbl">10-Week Programme</div>
+  <div class="grid" id="grid"></div>
+
+  <div class="foot">
+    <strong>Legend:</strong> <span style="color:var(--success);font-weight:700;">● This week</span> ·
+    <span style="color:#a06800;font-weight:700;">● Ready</span> ·
+    <span style="color:var(--text-light);font-weight:700;">● Planned</span><br>
+    Independent thought leadership · not affiliated with any current or past employer · compliant with Vietnam AI Law 134/2025 + PDPL.
+  </div>
+</div>
+
+<script>
+// Week registry. status: 'active' (current week) | 'ready' (built) | 'soon' (planned)
+const WEEKS = [
+  {n:1,  topic:'Most AI ROI Claims Are Accounting Fiction', date:'8–14 Jun 2026',  status:'ready',  file:'week1-publishing-schedule-dashboard.html'},
+  {n:2,  topic:'The Agent Maturity Ladder — How Far Should a Bank Let AI Act?', date:'15–21 Jun 2026', status:'active', file:'week2-publishing-schedule-dashboard.html'},
+  {n:3,  topic:'', date:'22–28 Jun 2026', status:'soon'},
+  {n:4,  topic:'', date:'29 Jun–5 Jul 2026', status:'soon'},
+  {n:5,  topic:'', date:'6–12 Jul 2026', status:'soon'},
+  {n:6,  topic:'', date:'13–19 Jul 2026', status:'soon'},
+  {n:7,  topic:'', date:'20–26 Jul 2026', status:'soon'},
+  {n:8,  topic:'', date:'27 Jul–2 Aug 2026', status:'soon'},
+  {n:9,  topic:'', date:'3–9 Aug 2026', status:'soon'},
+  {n:10, topic:'', date:'10–16 Aug 2026', status:'soon'},
+];
+
+const PILL = {active:['pill-active','This week'], ready:['pill-ready','Ready'], soon:['pill-soon','Planned']};
+
+const grid = document.getElementById('grid');
+WEEKS.forEach(w=>{
+  const isOpen = (w.status==='active'||w.status==='ready');
+  const href = isOpen ? w.file : ('week-coming-soon.html?w='+w.n);
+  const el = document.createElement('a');
+  el.className = 'card ' + w.status;
+  el.href = href;
+  if(w.status==='soon'){ el.addEventListener('click', e=>{ /* still navigates to coming-soon */ }); }
+  const [pillCls,pillTxt] = PILL[w.status];
+  el.innerHTML =
+    `<span class="pill ${pillCls}">${pillTxt}</span>`+
+    `<span class="card-wk">Week</span>`+
+    `<span class="card-n">${w.n}</span>`+
+    `<span class="card-topic">${w.topic || '<span style="color:#aab4c4;font-style:italic;font-weight:400;">Topic to be planned</span>'}</span>`+
+    `<span class="card-date">${w.date}</span>`;
+  grid.appendChild(el);
+});
+</script>
+</body>
+</html>
