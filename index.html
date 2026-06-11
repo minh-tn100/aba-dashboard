@@ -51,7 +51,7 @@
 </div>
 
 <div class="wrap">
-  <div class="sec-lbl">10-Week Programme</div>
+  <div class="sec-lbl">2026 Programme · Week 1 → Week 30</div>
   <div class="grid" id="grid"></div>
 
   <div class="foot">
@@ -63,39 +63,55 @@
 </div>
 
 <script>
-// Week registry. status: 'active' (current week) | 'ready' (built) | 'soon' (planned)
-const WEEKS = [
-  {n:1,  topic:'Most AI ROI Claims Are Accounting Fiction', date:'8–14 Jun 2026',  status:'ready',  file:'week1-publishing-schedule-dashboard.html'},
-  {n:2,  topic:'The Agent Maturity Ladder — How Far Should a Bank Let AI Act?', date:'15–21 Jun 2026', status:'active', file:'week2-publishing-schedule-dashboard.html'},
-  {n:3,  topic:'', date:'22–28 Jun 2026', status:'soon'},
-  {n:4,  topic:'', date:'29 Jun–5 Jul 2026', status:'soon'},
-  {n:5,  topic:'', date:'6–12 Jul 2026', status:'soon'},
-  {n:6,  topic:'', date:'13–19 Jul 2026', status:'soon'},
-  {n:7,  topic:'', date:'20–26 Jul 2026', status:'soon'},
-  {n:8,  topic:'', date:'27 Jul–2 Aug 2026', status:'soon'},
-  {n:9,  topic:'', date:'3–9 Aug 2026', status:'soon'},
-  {n:10, topic:'', date:'10–16 Aug 2026', status:'soon'},
-];
+// ── 10-week programme is now a full-year run: Week 1 (Mon 8 Jun 2026) → end of 2026 ──
+const START = new Date(2026, 5, 8);   // Mon 8 Jun 2026 (month index 5 = June)
+const TOTAL = 30;                     // Week 30 = Mon 28 Dec 2026 → Sun 3 Jan 2027 (covers all of 2026)
+
+// Built dashboards (topic + file). Everything else is auto-marked "Planned".
+const META = {
+  1: {topic:'Most AI ROI Claims Are Accounting Fiction',                          file:'week1-publishing-schedule-dashboard.html'},
+  2: {topic:'The Agent Maturity Ladder — How Far Should a Bank Let AI Act?',       file:'week2-publishing-schedule-dashboard.html'},
+};
+
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function mondayOf(n){ const d = new Date(START); d.setDate(START.getDate() + (n-1)*7); return d; }
+function fmtRange(start){
+  const end = new Date(start); end.setDate(start.getDate()+6);
+  const sM=MON[start.getMonth()], eM=MON[end.getMonth()], sY=start.getFullYear(), eY=end.getFullYear();
+  if (sM===eM && sY===eY) return `${start.getDate()}–${end.getDate()} ${sM} ${sY}`;
+  if (sY===eY)            return `${start.getDate()} ${sM}–${end.getDate()} ${eM} ${sY}`;
+  return `${start.getDate()} ${sM} ${sY}–${end.getDate()} ${eM} ${eY}`;
+}
+
+// Which week is "this week"?
+const today = new Date(); today.setHours(0,0,0,0);
+const diffDays = Math.floor((today - START) / 86400000);
+const curWeek  = diffDays >= 0 ? Math.floor(diffDays/7)+1 : 0;
 
 const PILL = {active:['pill-active','This week'], ready:['pill-ready','Ready'], soon:['pill-soon','Planned']};
 
 const grid = document.getElementById('grid');
-WEEKS.forEach(w=>{
-  const isOpen = (w.status==='active'||w.status==='ready');
-  const href = isOpen ? w.file : ('week-coming-soon.html?w='+w.n);
+for (let n=1; n<=TOTAL; n++){
+  const meta   = META[n];
+  const hasFile= !!(meta && meta.file);
+  const isCur  = (n === curWeek);
+  const status = isCur ? 'active' : (hasFile ? 'ready' : 'soon');
+  const href   = hasFile ? meta.file : ('week-coming-soon.html?w='+n);
+  const topic  = (meta && meta.topic) ? meta.topic
+               : '<span style="color:#aab4c4;font-style:italic;font-weight:400;">Topic to be planned</span>';
+
   const el = document.createElement('a');
-  el.className = 'card ' + w.status;
+  el.className = 'card ' + status;
   el.href = href;
-  if(w.status==='soon'){ el.addEventListener('click', e=>{ /* still navigates to coming-soon */ }); }
-  const [pillCls,pillTxt] = PILL[w.status];
+  const [pillCls,pillTxt] = PILL[status];
   el.innerHTML =
     `<span class="pill ${pillCls}">${pillTxt}</span>`+
     `<span class="card-wk">Week</span>`+
-    `<span class="card-n">${w.n}</span>`+
-    `<span class="card-topic">${w.topic || '<span style="color:#aab4c4;font-style:italic;font-weight:400;">Topic to be planned</span>'}</span>`+
-    `<span class="card-date">${w.date}</span>`;
+    `<span class="card-n">${n}</span>`+
+    `<span class="card-topic">${topic}</span>`+
+    `<span class="card-date">${fmtRange(mondayOf(n))}</span>`;
   grid.appendChild(el);
-});
+}
 </script>
 </body>
 </html>

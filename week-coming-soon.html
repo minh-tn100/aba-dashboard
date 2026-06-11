@@ -32,10 +32,21 @@
 </div>
 <script>
   const p = new URLSearchParams(location.search);
-  const w = p.get('w');
-  if(w){ document.getElementById('wkN').textContent = w; }
-  const DATES = {3:'22–28 Jun 2026',4:'29 Jun–5 Jul 2026',5:'6–12 Jul 2026',6:'13–19 Jul 2026',7:'20–26 Jul 2026',8:'27 Jul–2 Aug 2026',9:'3–9 Aug 2026',10:'10–16 Aug 2026'};
-  if(w && DATES[w]){ document.getElementById('wkDate').textContent = DATES[w]; }
+  const w = parseInt(p.get('w'), 10);
+  const START = new Date(2026, 5, 8); // Mon 8 Jun 2026 — must match index.html
+  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function fmtRange(start){
+    const end = new Date(start); end.setDate(start.getDate()+6);
+    const sM=MON[start.getMonth()], eM=MON[end.getMonth()], sY=start.getFullYear(), eY=end.getFullYear();
+    if (sM===eM && sY===eY) return `${start.getDate()}–${end.getDate()} ${sM} ${sY}`;
+    if (sY===eY)            return `${start.getDate()} ${sM}–${end.getDate()} ${eM} ${sY}`;
+    return `${start.getDate()} ${sM} ${sY}–${end.getDate()} ${eM} ${eY}`;
+  }
+  if(w){
+    document.getElementById('wkN').textContent = w;
+    const start = new Date(START); start.setDate(START.getDate() + (w-1)*7);
+    document.getElementById('wkDate').textContent = fmtRange(start);
+  }
 </script>
 </body>
 </html>
