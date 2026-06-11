@@ -6,26 +6,26 @@
 <title>Week 1 Publishing Schedule · AI Business Architect</title>
 <style>
   :root {
-    color-scheme: light;
-    --vib-navy:       #1a2b5f;
-    --vib-navy-dark:  #0f1a3d;
-    --vib-navy-light: #2a3f7a;
-    --vib-orange:     #f7931e;
-    --vib-yellow:     #ffc629;
-    --vib-gradient:   linear-gradient(135deg, #f7931e 0%, #ffc629 100%);
-    --vib-white:      #ffffff;
-    --vib-gray-light: #f5f7fa;
-    --vib-gray:       #e8ecf1;
-    --vib-text:       #333333;
-    --vib-text-light: #666666;
-    --vib-success:    #2a9d8f;
-    --vib-danger:     #e63946;
-    --ch-yt:   #e63946;
-    --ch-li:   #1a2b5f;
-    --ch-lp:   #0a66c2;
-    --ch-web:  #2a9d8f;
-    --ch-nl:   #f7931e;
-    --ch-setup:#7b2cbf;
+    color-scheme: dark;
+    --vib-navy:       #0A1428;
+    --vib-navy-dark:  #05080f;
+    --vib-navy-light: #16264a;
+    --vib-orange:     #D4AF37;
+    --vib-yellow:     #E6C457;
+    --vib-gradient:   linear-gradient(135deg, #D4AF37 0%, #E6C457 100%);
+    --vib-white:      #0f1d38;
+    --vib-gray-light: #0a1326;
+    --vib-gray:       #22355c;
+    --vib-text:       #E2E8F0;
+    --vib-text-light: #93a7c7;
+    --vib-success:    #34d399;
+    --vib-danger:     #f87171;
+    --ch-yt:   #ff5d5d;
+    --ch-li:   #1E90FF;
+    --ch-lp:   #3b9cff;
+    --ch-web:  #34d399;
+    --ch-nl:   #D4AF37;
+    --ch-setup:#b07cff;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Be Vietnam Pro','Segoe UI',system-ui,sans-serif; background: var(--vib-gray-light); color: var(--vib-text); font-size: 13px; line-height: 1.6; min-height: 100vh; }
@@ -68,7 +68,7 @@
   .day-hdr .dn { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--vib-text-light); }
   .day-hdr .dd { font-size: 17px; font-weight: 800; color: var(--vib-navy); line-height: 1.1; }
   .day-hdr .dm { font-size: 9px; color: var(--vib-text-light); }
-  .day-hdr.today { border-color: var(--vib-orange); background: rgba(247,147,30,.06); }
+  .day-hdr.today { border-color: var(--vib-orange); background: rgba(212,175,55,.06); }
   .day-hdr.today .dd { color: var(--vib-orange); }
 
   .ch-lbl { display: flex; align-items: center; justify-content: flex-end; padding-right: 7px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--vib-text-light); min-height: 76px; }
@@ -104,7 +104,7 @@
   .fld { margin-bottom: 14px; }
   .fld label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--vib-text-light); margin-bottom: 5px; }
   .fld select, .fld textarea, .fld input { width: 100%; background: var(--vib-gray-light); border: 1px solid var(--vib-gray); border-radius: 8px; color: var(--vib-text); padding: 8px 12px; font-size: 13px; font-family: inherit; outline: none; transition: border-color .2s; }
-  .fld select:focus, .fld textarea:focus, .fld input:focus { border-color: var(--vib-orange); box-shadow: 0 0 0 3px rgba(247,147,30,.12); }
+  .fld select:focus, .fld textarea:focus, .fld input:focus { border-color: var(--vib-orange); box-shadow: 0 0 0 3px rgba(212,175,55,.12); }
   .fld textarea { resize: vertical; min-height: 72px; }
   .m-actions { display: flex; gap: 8px; margin-top: 18px; }
   .btn { padding: 9px 20px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all .2s; font-family: inherit; }
@@ -119,11 +119,27 @@
   .log-e { background: var(--vib-white); border: 1px solid var(--vib-gray); border-radius: 8px; padding: 6px 11px; display: flex; gap: 10px; font-size: 11px; align-items: baseline; }
   .log-t { color: var(--vib-text-light); white-space: nowrap; min-width: 120px; font-size: 10px; }
   .log-m { color: var(--vib-text); }
+
+  /* ───── AI Business Architect · dark cinematic theme adjustments ───── */
+  body{background:#070f1f;}
+  .day-hdr .dd{color:#cfe0ff;}
+  .s-total .n{color:#cfe0ff;} .s-sched .n{color:#7fb0ff;}
+  .prog-top span:last-child{color:#E6C457;}
+  .b-published{background:rgba(52,211,153,.16);color:#34d399;border:1px solid rgba(52,211,153,.4);}
+  .b-scheduled{background:rgba(30,144,255,.12);color:#7fb0ff;border:1px solid rgba(30,144,255,.4);}
+  .b-in-progress{background:rgba(212,175,55,.16);color:#E6C457;border:1px solid rgba(212,175,55,.5);}
+  .b-pending{background:rgba(176,124,255,.14);color:#c9a9ff;border:1px solid rgba(176,124,255,.4);}
+  .b-draft{background:rgba(255,255,255,.06);color:#93a7c7;border:1px solid rgba(255,255,255,.12);}
+  .blocker-banner{background:rgba(176,124,255,.08);border:1px dashed rgba(176,124,255,.4);color:#c9a9ff;}
+  .day-hdr.today{background:rgba(212,175,55,.1);border-color:#D4AF37;} .day-hdr.today .dd{color:#E6C457;}
+  .task{box-shadow:0 2px 10px rgba(0,0,0,.45);}
+  .vib-badge{color:#0A1428;}
+  .cell.empty{border-color:rgba(255,255,255,.06);}
 </style>
 </head>
 <body>
 
-<div style="background:#0f1a3d;padding:8px 20px;"><a href="index.html" style="color:#cdd9ea;text-decoration:none;font-size:12px;font-weight:600;">🏠 Main page</a></div>
+<div style="background:#05080f;padding:8px 20px;"><a href="index.html" style="color:#cdd9ea;text-decoration:none;font-size:12px;font-weight:600;">🏠 Main page</a></div>
 
 <div class="header">
   <div class="vib-badge">AI Business Architect</div>
@@ -232,7 +248,7 @@
   <div class="cell empty note-cell">Post C + Article</div>
   <div class="cell empty note-cell">Post D + PDF</div>
   <div class="cell empty note-cell">Post E</div>
-  <div class="cell empty note-cell" style="color:var(--ch-nl);background:rgba(247,147,30,.05)">📬 Newsletter</div>
+  <div class="cell empty note-cell" style="color:var(--ch-nl);background:rgba(212,175,55,.05)">📬 Newsletter</div>
   <div class="cell empty note-cell">Analytics</div>
 
 </div></div>
