@@ -221,7 +221,7 @@
   <div class="ch-lbl" style="color:var(--ch-web)">Website</div>
   <div class="cell empty"></div><div class="cell empty"></div>
   <div class="cell"><div class="task ch-web" onclick="openModal('web1')"><div class="t-time">9:00 AM</div><div class="t-title">How Far Should a Bank Let AI Act on Its Own?</div><div class="t-sub">SEO article · The Agent Maturity Ladder</div><div class="t-bw"><span class="badge" id="b-web1"></span></div></div></div>
-  <div class="cell"><div class="task ch-web" onclick="openModal('dl1')"><div class="t-time">📄 DOWNLOAD</div><div class="t-title">The Agent Maturity Ladder</div><div class="t-sub">1-page framework PDF · lead magnet</div><div class="t-bw"><span class="badge" id="b-dl1"></span></div></div></div>
+  <div class="cell"><div class="task ch-web" onclick="openModal('dl1')"><div class="t-time">📄 DOWNLOAD</div><div class="t-title">The Agent Maturity Ladder</div><div class="t-sub">5-page playbook PDF · lead magnet</div><div class="t-bw"><span class="badge" id="b-dl1"></span></div></div></div>
   <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
 
   <!-- Newsletter -->
@@ -232,10 +232,10 @@
 
   <!-- Production -->
   <div class="ch-lbl" style="color:var(--ch-setup)">Prod</div>
-  <div class="cell"><div class="task ch-setup" onclick="openModal('prod1')"><div class="t-time">⚡ BLOCKER</div><div class="t-title">Render video + VO master</div><div class="t-sub">64 Style-D clips · unified VO</div><div class="t-bw"><span class="badge" id="b-prod1"></span></div></div></div>
-  <div class="cell"><div class="task ch-setup" onclick="openModal('reg1')"><div class="t-time">⚠ VERIFY</div><div class="t-title">Verify 2026 reg FACTs</div><div class="t-sub">SR 26-2 · EU AI Act · fines · BNPL</div><div class="t-bw"><span class="badge" id="b-reg1"></span></div></div></div>
+  <div class="cell"><div class="task ch-setup" onclick="openModal('prod1')"><div class="t-time">✓ DONE</div><div class="t-title">Render video + VO master</div><div class="t-sub">64 Style-D clips · unified VO</div><div class="t-bw"><span class="badge" id="b-prod1"></span></div></div></div>
+  <div class="cell"><div class="task ch-setup" onclick="openModal('reg1')"><div class="t-time">✓ DONE</div><div class="t-title">Verify 2026 reg FACTs</div><div class="t-sub">SR 26-2 · EU AI Act · fines · BNPL</div><div class="t-bw"><span class="badge" id="b-reg1"></span></div></div></div>
   <div class="cell empty"></div><div class="cell empty"></div>
-  <div class="cell"><div class="blocker-banner">⚠ Video render + VO + reg-fact check must clear before Mon launch</div></div>
+  <div class="cell"><div class="blocker-banner" style="color:#34d399;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08);">✓ Video LIVE · all 13 pack assets produced · publish on schedule</div></div>
   <div class="cell empty"></div><div class="cell empty"></div>
 
   <!-- Notes -->
@@ -302,10 +302,10 @@ const TASKS = {
   'lp-sat': {title:'LI Page · Newsletter Teaser',            meta:'Sat 20 Jun · 9:00 AM · Drive to Issue #002 sign-up',                               ch:'LI Page'},
   'lp-sun': {title:'LI Page · Re-share Best Post',           meta:'Sun 21 Jun · 10:00 AM · Pull analytics · pick top performer',                      ch:'LI Page'},
   'web1':   {title:'Website SEO Article',                    meta:'Wed 17 Jun · 9:00 AM · /insights/agent-maturity-ladder · The Agent Maturity Ladder', ch:'Website'},
-  'dl1':    {title:'The Agent Maturity Ladder — 1-Page PDF', meta:'Thu 18 Jun · Lead magnet · subscriber download · aibusinessarchitect.ai',           ch:'Website'},
+  'dl1':    {title:'The Agent Maturity Ladder — 5-Page Playbook', meta:'Thu 18 Jun · Lead magnet · 5-page PDF · subscriber download',                  ch:'Website'},
   'nl1':    {title:'Newsletter Issue #002',                  meta:'Sat 20 Jun · 8:00 AM · The AI Architect Letter · 4 rungs, 2 rails, 1 gate',         ch:'Newsletter'},
   'prod1':  {title:'Render Video + VO Master',               meta:'Before Mon 15 · 64 Style-D clips · avatar in 12 scenes · unified VO',               ch:'Production'},
-  'reg1':   {title:'Verify 2026 Regulatory FACTs',           meta:'Before Mon 15 · SR 26-2 · EU AI Act · $881M/$187M fines · BNPL · COiN',             ch:'Production'},
+  'reg1':   {title:'Verify 2026 Regulatory FACTs',           meta:'DONE · SR 26-2 · EU AI Act · Zillow $304M · AI-washing $400K · CFPB',               ch:'Production'},
 };
 
 const SM = {
@@ -320,8 +320,8 @@ const SM = {
 const CONTENT_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','web1','dl1','nl1'];
 
 const SEED = {
-  'yt1':    {status:'scheduled',  url:'', notes:'Pending VEO render + VO master'},
-  'li-a':   {status:'scheduled',  url:'', notes:''},
+  'yt1':    {status:'published',  url:'https://youtu.be/xyhPi2q9k3M', notes:'Published · https://youtu.be/xyhPi2q9k3M'},
+  'li-a':   {status:'draft',      url:'', notes:'DRAFTED on LinkedIn with image (18-post-A-captioned.png) · publish Mon 9AM · urn:li:share:7471733668647120897'},
   'li-b':   {status:'scheduled',  url:'', notes:''},
   'li-c':   {status:'scheduled',  url:'', notes:''},
   'li-d':   {status:'scheduled',  url:'', notes:''},
@@ -334,17 +334,17 @@ const SEED = {
   'lp-sat': {status:'scheduled',  url:'', notes:''},
   'lp-sun': {status:'scheduled',  url:'', notes:'Pull Mon–Fri analytics first · pick top-performing post by engagement rate'},
   'web1':   {status:'scheduled',  url:'', notes:'Voice 97 · governance PASS · ready to publish'},
-  'dl1':    {status:'scheduled',  url:'', notes:'Lead magnet · gate behind email capture on website'},
-  'nl1':    {status:'scheduled',  url:'', notes:'Voice 97 · ready to schedule on Beehiiv'},
-  'prod1':  {status:'in-progress',url:'', notes:'Style D 64-scene plan locked · prompts ready (07) · render + VO pending'},
-  'reg1':   {status:'pending',    url:'', notes:'R1 · verify SR 26-2, EU AI Act date, $881M/$187M fines, BNPL, COiN against primary sources before publish'},
+  'dl1':    {status:'scheduled',  url:'', notes:'READY — 5-page Agent Maturity Ladder playbook PDF (16-…) · gate behind email capture'},
+  'nl1':    {status:'scheduled',  url:'', notes:'READY — Issue #002 · voice 97 · figures corrected'},
+  'prod1':  {status:'published',  url:'https://youtu.be/xyhPi2q9k3M', notes:'DONE — 64 clips rendered + VO master · video LIVE'},
+  'reg1':   {status:'published',  url:'', notes:'DONE — FACT-CHECK complete · figures verified (Zillow $304M · AI-washing $400K) · R1 closed'},
 };
 
-const PUBLISHED_IDS = [];
+const PUBLISHED_IDS = ['yt1','prod1','reg1'];
 
 let state = {};
 try {
-  const s = localStorage.getItem('aba-w2-v1');
+  const s = localStorage.getItem('aba-w2-v3');
   if (s) {
     state = JSON.parse(s);
     PUBLISHED_IDS.forEach(id => {
@@ -360,7 +360,7 @@ Object.keys(TASKS).forEach(id => { if (!state[id]) state[id] = JSON.parse(JSON.s
 let cur = null;
 
 function persist() {
-  try { localStorage.setItem('aba-w2-v1', JSON.stringify(state)); } catch(e){}
+  try { localStorage.setItem('aba-w2-v3', JSON.stringify(state)); } catch(e){}
   const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   document.getElementById('savedTs').textContent  = 'Last updated: ' + ts;
   document.getElementById('savedTs2').textContent = 'Last updated: ' + ts;
