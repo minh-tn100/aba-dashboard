@@ -321,30 +321,30 @@ const CONTENT_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','web1','dl1','nl1'
 
 const SEED = {
   'yt1':    {status:'published',  url:'https://youtu.be/xyhPi2q9k3M', notes:'Published · https://youtu.be/xyhPi2q9k3M'},
-  'li-a':   {status:'draft',      url:'', notes:'DRAFTED on LinkedIn with image (18-post-A-captioned.png) · publish Mon 9AM · urn:li:share:7471733668647120897'},
-  'li-b':   {status:'scheduled',  url:'', notes:''},
-  'li-c':   {status:'scheduled',  url:'', notes:''},
-  'li-d':   {status:'scheduled',  url:'', notes:''},
-  'li-e':   {status:'scheduled',  url:'', notes:'Framework + 7-slide carousel · link in first comment'},
-  'lp-a':   {status:'scheduled',  url:'', notes:''},
-  'lp-b':   {status:'scheduled',  url:'', notes:''},
-  'lp-c':   {status:'scheduled',  url:'', notes:''},
-  'lp-d':   {status:'scheduled',  url:'', notes:''},
-  'lp-e':   {status:'scheduled',  url:'', notes:''},
-  'lp-sat': {status:'scheduled',  url:'', notes:''},
-  'lp-sun': {status:'scheduled',  url:'', notes:'Pull Mon–Fri analytics first · pick top-performing post by engagement rate'},
-  'web1':   {status:'scheduled',  url:'', notes:'Voice 97 · governance PASS · ready to publish'},
-  'dl1':    {status:'scheduled',  url:'', notes:'READY — 5-page Agent Maturity Ladder playbook PDF (16-…) · gate behind email capture'},
-  'nl1':    {status:'scheduled',  url:'', notes:'READY — Issue #002 · voice 97 · figures corrected'},
+  'li-a':   {status:'published',  url:'', notes:'Published · Post A Story · image attached'},
+  'li-b':   {status:'published',  url:'', notes:'Published · Stat'},
+  'li-c':   {status:'published',  url:'', notes:'Published · Question'},
+  'li-d':   {status:'published',  url:'', notes:'Published · Hot-take'},
+  'li-e':   {status:'published',  url:'', notes:'Published · Framework + 7-slide carousel'},
+  'lp-a':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted (Page handled manually)'},
+  'lp-b':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-c':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-d':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-e':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-sat': {status:'scheduled',  url:'', notes:'Company Page teaser — not posted'},
+  'lp-sun': {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'web1':   {status:'published',  url:'', notes:'Published · SEO article · The Agent Maturity Ladder'},
+  'dl1':    {status:'published',  url:'', notes:'Published · 5-page Agent Maturity Ladder playbook PDF'},
+  'nl1':    {status:'published',  url:'', notes:'Published · Issue #002'},
   'prod1':  {status:'published',  url:'https://youtu.be/xyhPi2q9k3M', notes:'DONE — 64 clips rendered + VO master · video LIVE'},
-  'reg1':   {status:'published',  url:'', notes:'DONE — FACT-CHECK complete · figures verified (Zillow $304M · AI-washing $400K) · R1 closed'},
+  'reg1':   {status:'published',  url:'', notes:'DONE — FACT-CHECK complete · R1 closed'},
 };
 
-const PUBLISHED_IDS = ['yt1','prod1','reg1'];
+const PUBLISHED_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','web1','dl1','nl1','prod1','reg1'];
 
 let state = {};
 try {
-  const s = localStorage.getItem('aba-w2-v3');
+  const s = localStorage.getItem('aba-w2-v4');
   if (s) {
     state = JSON.parse(s);
     PUBLISHED_IDS.forEach(id => {
@@ -360,7 +360,7 @@ Object.keys(TASKS).forEach(id => { if (!state[id]) state[id] = JSON.parse(JSON.s
 let cur = null;
 
 function persist() {
-  try { localStorage.setItem('aba-w2-v3', JSON.stringify(state)); } catch(e){}
+  try { localStorage.setItem('aba-w2-v4', JSON.stringify(state)); } catch(e){}
   const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   document.getElementById('savedTs').textContent  = 'Last updated: ' + ts;
   document.getElementById('savedTs2').textContent = 'Last updated: ' + ts;

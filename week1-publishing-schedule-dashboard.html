@@ -329,27 +329,27 @@ const SEED = {
   'li-b':   {status:'published',  url:'', notes:'Published Tue 9 Jun · 9:00 AM · Stat · 228% ROI HSBC Quantexa'},
   'li-c':   {status:'published',  url:'', notes:'Published Wed 10 Jun · 9:00 AM · Story · 5% vs 20% bank'},
   'li-d':   {status:'published',  url:'', notes:'Published Thu 11 Jun · 9:00 AM · Question · Boardroom Equation walk-through'},
-  'li-e':   {status:'scheduled',  url:'', notes:'Fri 12 Jun · 9:00 AM · Framework + 7-slide carousel · link in first comment'},
-  'lp-a':   {status:'published',  url:'', notes:'Published Mon 8 Jun · 11:00 AM · Brand voice · link in first comment'},
-  'lp-b':   {status:'published',  url:'', notes:'Published Tue 9 Jun · 11:00 AM · Brand voice · Stat'},
-  'lp-c':   {status:'published',  url:'', notes:'Published Wed 10 Jun · 3:00 PM · Brand voice · Story + framework page'},
-  'lp-d':   {status:'published',  url:'', notes:'Published Thu 11 Jun · 12:00 PM · Brand voice · Question'},
-  'lp-e':   {status:'scheduled',  url:'', notes:''},
-  'lp-sat': {status:'scheduled',  url:'', notes:''},
-  'lp-sun': {status:'scheduled',  url:'', notes:'Pull Mon–Fri analytics first · pick top-performing post by engagement rate'},
-  'web1':   {status:'published',  url:'', notes:'Published Wed 10 Jun · 9:00 AM · SEO article ~2,000 words'},
-  'dl1':    {status:'published',  url:'', notes:'Published Thu 11 Jun · Boardroom Equation 1-page PDF · lead magnet live'},
-  'nl1':    {status:'scheduled',  url:'', notes:''},
-  'email1': {status:'published',  url:'', notes:'Done Mon 8 Jun · Newsletter blocker cleared'},
-  'w2-video':{status:'in-progress',url:'', notes:'Style D 64-scene plan locked · prompts ready (07) · render + VO master pending · target before Mon 15 Jun'},
-  'w2-reg':  {status:'pending',    url:'', notes:'R1 · verify regulatory FACTs against primary sources before Week 2 publish'},
+  'li-e':   {status:'published',  url:'', notes:'Published · Framework + 7-slide carousel'},
+  'lp-a':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted (Page handled manually)'},
+  'lp-b':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-c':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-d':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-e':   {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'lp-sat': {status:'scheduled',  url:'', notes:'Company Page teaser — not posted'},
+  'lp-sun': {status:'scheduled',  url:'', notes:'Company Page re-share — not posted'},
+  'web1':   {status:'published',  url:'', notes:'Published · SEO article ~2,000 words'},
+  'dl1':    {status:'published',  url:'', notes:'Published · Boardroom Equation lead magnet live'},
+  'nl1':    {status:'published',  url:'', notes:'Published · Newsletter Issue #001'},
+  'email1': {status:'published',  url:'', notes:'Done · Newsletter blocker cleared'},
+  'w2-video':{status:'published',  url:'', notes:'DONE · Week-2 video rendered + VO master'},
+  'w2-reg':  {status:'published',  url:'', notes:'DONE · regulatory FACTs verified'},
 };
 
-const PUBLISHED_IDS = ['yt1','li-a','lp-a','email1','li-b','lp-b','li-c','lp-c','web1','li-d','lp-d','dl1'];
+const PUBLISHED_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','web1','dl1','nl1','email1','w2-video','w2-reg'];
 
 let state = {};
 try {
-  const s = localStorage.getItem('aba-w1-v5');
+  const s = localStorage.getItem('aba-w1-v6');
   if (s) {
     state = JSON.parse(s);
     PUBLISHED_IDS.forEach(id => {
@@ -365,7 +365,7 @@ Object.keys(TASKS).forEach(id => { if (!state[id]) state[id] = JSON.parse(JSON.s
 let cur = null;
 
 function persist() {
-  try { localStorage.setItem('aba-w1-v5', JSON.stringify(state)); } catch(e){}
+  try { localStorage.setItem('aba-w1-v6', JSON.stringify(state)); } catch(e){}
   const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   document.getElementById('savedTs').textContent  = 'Last updated: ' + ts;
   document.getElementById('savedTs2').textContent = 'Last updated: ' + ts;

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 3 Publishing Schedule · AI Business Architect</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --vib-navy:#0A1428; --vib-navy-dark:#05080f; --vib-navy-light:#16264a;
+    --vib-orange:#D4AF37; --vib-yellow:#E6C457; --vib-gradient:linear-gradient(135deg,#D4AF37 0%,#E6C457 100%);
+    --vib-white:#0f1d38; --vib-gray-light:#0a1326; --vib-gray:#22355c;
+    --vib-text:#E2E8F0; --vib-text-light:#93a7c7; --vib-success:#34d399; --vib-danger:#f87171;
+    --ch-yt:#ff5d5d; --ch-li:#1E90FF; --ch-lp:#3b9cff; --ch-web:#34d399; --ch-nl:#D4AF37; --ch-setup:#b07cff;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif; background:#070f1f; color:var(--vib-text); font-size:13px; line-height:1.6; min-height:100vh; }
+  .topbar { background:var(--vib-navy-dark); padding:8px 20px; }
+  .topbar a { color:#cdd9ea; text-decoration:none; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px; }
+  .topbar a:hover { color:var(--vib-yellow); }
+  .header { background:linear-gradient(135deg,var(--vib-navy-dark) 0%,var(--vib-navy) 60%,var(--vib-navy-light) 100%); color:#fff; padding:24px 20px 18px; }
+  .vib-badge { display:inline-block; background:var(--vib-gradient); color:#0A1428; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:10px; }
+  .header h1 { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:3px; }
+  .header-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .header .sub { font-size:12px; opacity:.8; }
+  .saved-ts { font-size:10px; opacity:.6; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr) 2.2fr; gap:8px; padding:12px 14px; background:var(--vib-white); border-bottom:2px solid var(--vib-gray); }
+  .stat { background:var(--vib-gray-light); border:1px solid var(--vib-gray); border-radius:10px; padding:9px 8px; text-align:center; }
+  .stat .n { font-size:22px; font-weight:800; line-height:1; }
+  .stat .lbl { font-size:9px; text-transform:uppercase; letter-spacing:.08em; color:var(--vib-text-light); margin-top:2px; font-weight:600; }
+  .s-total .n{color:#cfe0ff;} .s-pub .n{color:var(--vib-success);} .s-sched .n{color:#7fb0ff;} .s-delay .n{color:var(--vib-danger);}
+  .prog-wrap { background:var(--vib-gray-light); border:1px solid var(--vib-gray); border-radius:10px; padding:9px 12px; display:flex; flex-direction:column; justify-content:center; gap:4px; }
+  .prog-top { display:flex; justify-content:space-between; font-size:10px; color:var(--vib-text-light); font-weight:700; }
+  .prog-top span:last-child{color:#E6C457;}
+  .prog-bar { height:8px; background:var(--vib-gray); border-radius:4px; overflow:hidden; }
+  .prog-fill { height:100%; background:var(--vib-gradient); border-radius:4px; transition:width .5s ease; }
+  .prog-detail { font-size:10px; color:var(--vib-text-light); }
+  .legend { display:flex; gap:12px; flex-wrap:wrap; padding:9px 14px; background:var(--vib-white); border-bottom:1px solid var(--vib-gray); align-items:center; }
+  .leg { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--vib-text-light); font-weight:500; }
+  .dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .status-pills { margin-left:auto; display:flex; gap:5px; flex-wrap:wrap; align-items:center; }
+  .badge { display:inline-block; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:2px 7px; border-radius:10px; }
+  .b-published{background:rgba(52,211,153,.16);color:#34d399;border:1px solid rgba(52,211,153,.4);}
+  .b-scheduled{background:rgba(30,144,255,.12);color:#7fb0ff;border:1px solid rgba(30,144,255,.4);}
+  .b-in-progress{background:rgba(212,175,55,.16);color:#E6C457;border:1px solid rgba(212,175,55,.5);}
+  .b-delayed{background:rgba(230,57,70,.12);color:#e63946;border:1px solid rgba(230,57,70,.3);}
+  .b-pending{background:rgba(176,124,255,.14);color:#c9a9ff;border:1px solid rgba(176,124,255,.4);}
+  .b-draft{background:rgba(255,255,255,.06);color:#93a7c7;border:1px solid rgba(255,255,255,.12);}
+  .cal-wrap { padding:14px; overflow-x:auto; }
+  .cal { display:grid; grid-template-columns:72px repeat(7,1fr); gap:5px; min-width:820px; }
+  .day-hdr { background:var(--vib-white); border:1px solid var(--vib-gray); border-radius:10px; padding:7px 5px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,.04); }
+  .day-hdr .dn { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--vib-text-light); }
+  .day-hdr .dd { font-size:17px; font-weight:800; color:#cfe0ff; line-height:1.1; }
+  .day-hdr .dm { font-size:9px; color:var(--vib-text-light); }
+  .day-hdr.today { background:rgba(212,175,55,.1); border-color:#D4AF37; } .day-hdr.today .dd { color:#E6C457; }
+  .ch-lbl { display:flex; align-items:center; justify-content:flex-end; padding-right:7px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--vib-text-light); min-height:76px; }
+  .cell { background:var(--vib-gray-light); border:1px solid var(--vib-gray); border-radius:8px; min-height:76px; padding:5px; display:flex; flex-direction:column; gap:3px; }
+  .cell.empty { background:transparent; border-style:dashed; border-color:rgba(255,255,255,.06); }
+  .task { background:var(--vib-white); border-radius:7px; padding:7px 9px; cursor:pointer; border-left:4px solid transparent; box-shadow:0 2px 10px rgba(0,0,0,.45); transition:all .2s ease; user-select:none; flex:1; }
+  .task:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.5); }
+  .task .t-time { font-size:9px; font-weight:700; letter-spacing:.04em; margin-bottom:2px; }
+  .task .t-title { font-size:11px; font-weight:700; line-height:1.3; color:var(--vib-text); margin-bottom:2px; }
+  .task .t-sub { font-size:10px; color:var(--vib-text-light); line-height:1.3; }
+  .task .t-bw { margin-top:4px; }
+  .ch-yt{border-left-color:var(--ch-yt);} .ch-yt .t-time{color:var(--ch-yt);}
+  .ch-li{border-left-color:var(--ch-li);} .ch-li .t-time{color:var(--ch-li);}
+  .ch-lp{border-left-color:var(--ch-lp);} .ch-lp .t-time{color:var(--ch-lp);}
+  .ch-web{border-left-color:var(--ch-web);} .ch-web .t-time{color:var(--ch-web);}
+  .ch-nl{border-left-color:var(--ch-nl);} .ch-nl .t-time{color:var(--ch-nl);}
+  .ch-setup{border-left-color:var(--ch-setup);} .ch-setup .t-time{color:var(--ch-setup);}
+  .note-cell { font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.4; min-height:34px; padding:4px; color:var(--vib-text-light); border-radius:6px; }
+  .blocker-banner { background:rgba(176,124,255,.08); border:1px dashed rgba(176,124,255,.4); border-radius:6px; padding:6px 8px; font-size:10px; color:#c9a9ff; font-weight:600; line-height:1.4; height:100%; display:flex; align-items:center; }
+  .overlay { display:none; position:fixed; inset:0; background:rgba(15,26,61,.5); z-index:200; align-items:center; justify-content:center; padding:20px; }
+  .overlay.open { display:flex; }
+  .modal { background:var(--vib-white); border-radius:16px; width:100%; max-width:480px; overflow:hidden; box-shadow:0 20px 60px rgba(15,26,61,.2); position:relative; }
+  .modal-hdr { background:linear-gradient(135deg,var(--vib-navy-dark),var(--vib-navy)); color:#fff; padding:18px 20px; padding-right:44px; }
+  .modal-hdr h2 { font-size:15px; font-weight:700; margin-bottom:2px; }
+  .modal-hdr .m-meta { font-size:11px; opacity:.75; }
+  .modal-x { position:absolute; top:14px; right:14px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25); border-radius:6px; color:#fff; font-size:13px; cursor:pointer; padding:4px 8px; line-height:1; }
+  .modal-body { padding:20px; }
+  .fld { margin-bottom:14px; }
+  .fld label { display:block; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--vib-text-light); margin-bottom:5px; }
+  .fld select,.fld textarea,.fld input { width:100%; background:var(--vib-gray-light); border:1px solid var(--vib-gray); border-radius:8px; color:var(--vib-text); padding:8px 12px; font-size:13px; font-family:inherit; outline:none; }
+  .fld textarea { resize:vertical; min-height:72px; }
+  .m-actions { display:flex; gap:8px; margin-top:18px; }
+  .btn { padding:9px 20px; border-radius:20px; font-size:13px; font-weight:700; cursor:pointer; border:none; font-family:inherit; }
+  .btn-p { background:var(--vib-gradient); color:#0A1428; }
+  .btn-s { background:var(--vib-gray-light); color:var(--vib-text-light); border:1px solid var(--vib-gray); }
+  .log-sec { padding:0 14px 24px; }
+  .log-hdr { display:flex; align-items:center; gap:8px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--vib-text-light); padding:14px 0 10px; border-top:2px solid var(--vib-gray); }
+  .log-hdr::before { content:''; display:inline-block; width:12px; height:3px; background:var(--vib-gradient); border-radius:2px; }
+  .log-list { display:flex; flex-direction:column; gap:5px; max-height:180px; overflow-y:auto; }
+  .log-e { background:var(--vib-white); border:1px solid var(--vib-gray); border-radius:8px; padding:6px 11px; display:flex; gap:10px; font-size:11px; align-items:baseline; }
+  .log-t { color:var(--vib-text-light); white-space:nowrap; min-width:120px; font-size:10px; }
+  .log-m { color:var(--vib-text); }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a href="index.html">🏠 Main page</a></div>
+
+<div class="header">
+  <div class="vib-badge">AI Business Architect</div>
+  <h1>Week 3 Publishing Schedule</h1>
+  <div class="header-row">
+    <div class="sub">Mon 22 Jun – Sun 28 Jun 2026 · The 4 Stone Guardians — The Governance That Lets Banks Move Fast</div>
+    <div class="saved-ts" id="savedTs">–</div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat s-total"><div class="n" id="cTotal">0</div><div class="lbl">Total Actions</div></div>
+  <div class="stat s-pub"><div class="n" id="cPub">0</div><div class="lbl">Published</div></div>
+  <div class="stat s-sched"><div class="n" id="cSched">0</div><div class="lbl">Remaining</div></div>
+  <div class="stat s-delay"><div class="n" id="cDelay">0</div><div class="lbl">Delayed</div></div>
+  <div class="prog-wrap">
+    <div class="prog-top"><span>Content Progress</span><span id="pPct">0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="pFill" style="width:0%"></div></div>
+    <div class="prog-detail" id="pDetail">0 of 9 content assets published</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg"><div class="dot" style="background:var(--ch-yt)"></div>YouTube</div>
+  <div class="leg"><div class="dot" style="background:var(--ch-li)"></div>LinkedIn Personal</div>
+  <div class="leg"><div class="dot" style="background:var(--ch-lp)"></div>LI Company Page</div>
+  <div class="leg"><div class="dot" style="background:var(--ch-web)"></div>Website</div>
+  <div class="leg"><div class="dot" style="background:var(--ch-nl)"></div>Newsletter</div>
+  <div class="leg"><div class="dot" style="background:var(--ch-setup)"></div>Production</div>
+  <div class="status-pills">
+    <span class="badge b-published">✓ Published</span>
+    <span class="badge b-draft">○ Draft</span>
+    <span class="badge b-scheduled">⏱ Scheduled</span>
+    <span class="badge b-delayed">⚠ Delayed</span>
+  </div>
+</div>
+
+<div class="cal-wrap"><div class="cal">
+
+  <div></div>
+  <div class="day-hdr" id="dh0"><div class="dn">Mon</div><div class="dd">22</div><div class="dm">Jun</div></div>
+  <div class="day-hdr" id="dh1"><div class="dn">Tue</div><div class="dd">23</div><div class="dm">Jun</div></div>
+  <div class="day-hdr" id="dh2"><div class="dn">Wed</div><div class="dd">24</div><div class="dm">Jun</div></div>
+  <div class="day-hdr" id="dh3"><div class="dn">Thu</div><div class="dd">25</div><div class="dm">Jun</div></div>
+  <div class="day-hdr" id="dh4"><div class="dn">Fri</div><div class="dd">26</div><div class="dm">Jun</div></div>
+  <div class="day-hdr" id="dh5"><div class="dn">Sat</div><div class="dd">27</div><div class="dm">Jun</div></div>
+  <div class="day-hdr" id="dh6"><div class="dn">Sun</div><div class="dd">28</div><div class="dm">Jun</div></div>
+
+  <!-- YouTube -->
+  <div class="ch-lbl" style="color:var(--ch-yt)">YouTube</div>
+  <div class="cell"><div class="task ch-yt" onclick="openModal('yt1')"><div class="t-time">▶ LIVE</div><div class="t-title">The Governance That Lets Banks Move Fast</div><div class="t-sub">Video · The 4 Stone Guardians</div><div class="t-bw"><span class="badge" id="b-yt1"></span></div></div></div>
+  <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
+
+  <!-- LinkedIn Personal -->
+  <div class="ch-lbl" style="color:var(--ch-li)">LinkedIn</div>
+  <div class="cell"><div class="task ch-li" onclick="openModal('li-a')"><div class="t-time">6:00 AM+</div><div class="t-title">Post A · Story</div><div class="t-sub">Governance = a road, not a brake (DBS 15→3 mo)</div><div class="t-bw"><span class="badge" id="b-li-a"></span></div></div></div>
+  <div class="cell"><div class="task ch-li" onclick="openModal('li-b')"><div class="t-time">8:00 AM</div><div class="t-title">Post B · Stat</div><div class="t-sub">DORA 2.6× · manual CABs = low performers</div><div class="t-bw"><span class="badge" id="b-li-b"></span></div></div></div>
+  <div class="cell"><div class="task ch-li" onclick="openModal('li-c')"><div class="t-time">8:00 AM</div><div class="t-title">Post C · Question</div><div class="t-sub">Which guardian is your bank missing?</div><div class="t-bw"><span class="badge" id="b-li-c"></span></div></div></div>
+  <div class="cell"><div class="task ch-li" onclick="openModal('li-d')"><div class="t-time">8:00 AM</div><div class="t-title">Post D · Hot-take</div><div class="t-sub">The committee is the bottleneck, not "process"</div><div class="t-bw"><span class="badge" id="b-li-d"></span></div></div></div>
+  <div class="cell"><div class="task ch-li" onclick="openModal('li-e')"><div class="t-time">8:00 AM</div><div class="t-title">Post E · Framework + Carousel</div><div class="t-sub">Gate · Guardrail · Ledger · Owner</div><div class="t-bw"><span class="badge" id="b-li-e"></span></div></div></div>
+  <div class="cell empty"></div><div class="cell empty"></div>
+
+  <!-- LinkedIn Company Page -->
+  <div class="ch-lbl" style="color:var(--ch-lp);font-size:8.5px;line-height:1.3;text-align:right;padding-right:7px;">LI<br>Page</div>
+  <div class="cell"><div class="task ch-lp" onclick="openModal('lp-a')"><div class="t-time">11:00 AM</div><div class="t-title">Re-share Post A</div><div class="t-sub">Brand voice · 2h after personal</div><div class="t-bw"><span class="badge" id="b-lp-a"></span></div></div></div>
+  <div class="cell"><div class="task ch-lp" onclick="openModal('lp-b')"><div class="t-time">11:00 AM</div><div class="t-title">Re-share Post B</div><div class="t-sub">Brand voice · Stat</div><div class="t-bw"><span class="badge" id="b-lp-b"></span></div></div></div>
+  <div class="cell"><div class="task ch-lp" onclick="openModal('lp-c')"><div class="t-time">3:00 PM</div><div class="t-title">Re-share Post C</div><div class="t-sub">Brand voice · Question + article</div><div class="t-bw"><span class="badge" id="b-lp-c"></span></div></div></div>
+  <div class="cell"><div class="task ch-lp" onclick="openModal('lp-d')"><div class="t-time">12:00 PM</div><div class="t-title">Re-share Post D</div><div class="t-sub">Brand voice · Hot-take</div><div class="t-bw"><span class="badge" id="b-lp-d"></span></div></div></div>
+  <div class="cell"><div class="task ch-lp" onclick="openModal('lp-e')"><div class="t-time">3:00 PM</div><div class="t-title">Re-share Post E</div><div class="t-sub">Brand voice · Framework + carousel</div><div class="t-bw"><span class="badge" id="b-lp-e"></span></div></div></div>
+  <div class="cell"><div class="task ch-lp" onclick="openModal('lp-sat')"><div class="t-time">9:00 AM</div><div class="t-title">Newsletter Teaser</div><div class="t-sub">Drive to Issue #003 sign-up</div><div class="t-bw"><span class="badge" id="b-lp-sat"></span></div></div></div>
+  <div class="cell"><div class="task ch-lp" onclick="openModal('lp-sun')"><div class="t-time">10:00 AM</div><div class="t-title">Re-share Best Post</div><div class="t-sub">Pull analytics · top performer</div><div class="t-bw"><span class="badge" id="b-lp-sun"></span></div></div></div>
+
+  <!-- Website -->
+  <div class="ch-lbl" style="color:var(--ch-web)">Website</div>
+  <div class="cell"><div class="task ch-web" onclick="openModal('web1')"><div class="t-time">9:00 AM</div><div class="t-title">The Governance That Lets Banks Move Fast</div><div class="t-sub">SEO article · The 4 Stone Guardians · voice 92</div><div class="t-bw"><span class="badge" id="b-web1"></span></div></div></div>
+  <div class="cell empty"></div><div class="cell empty"></div>
+  <div class="cell"><div class="task ch-web" onclick="openModal('dl1')"><div class="t-time">📄 DOWNLOAD</div><div class="t-title">The 4 Stone Guardians</div><div class="t-sub">5-page playbook PDF · lead magnet</div><div class="t-bw"><span class="badge" id="b-dl1"></span></div></div></div>
+  <div class="cell empty"></div><div class="cell empty"></div>
+
+  <!-- Newsletter -->
+  <div class="ch-lbl" style="color:var(--ch-nl)">Newsletter</div>
+  <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
+  <div class="cell"><div class="task ch-nl" onclick="openModal('nl1')"><div class="t-time">8:00 AM</div><div class="t-title">The AI Architect Letter · Issue #003</div><div class="t-sub">"The Velocity of Control"</div><div class="t-bw"><span class="badge" id="b-nl1"></span></div></div></div>
+  <div class="cell empty"></div>
+
+  <!-- Production -->
+  <div class="ch-lbl" style="color:var(--ch-setup)">Prod</div>
+  <div class="cell"><div class="task ch-setup" onclick="openModal('prod1')"><div class="t-time">✓ DONE</div><div class="t-title">Render video + VO master</div><div class="t-sub">64 clips · unified VO · video LIVE</div><div class="t-bw"><span class="badge" id="b-prod1"></span></div></div></div>
+  <div class="cell"><div class="task ch-setup" onclick="openModal('reg1')"><div class="t-time">✓ DONE</div><div class="t-title">Govern + FACT-CHECK</div><div class="t-sub">9/9 PASS · SR 26-2 · EU Art-12 · Decree 356/2025</div><div class="t-bw"><span class="badge" id="b-reg1"></span></div></div></div>
+  <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
+  <div class="cell" style="grid-column:span 2"><div class="blocker-banner" style="color:#34d399;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08);">✓ Video LIVE (youtu.be/7o6YDoc5bf4) · 13-pack complete · Post A drafted — publish Mon after 6AM Hanoi</div></div>
+
+  <!-- Notes -->
+  <div class="ch-lbl" style="font-size:9px">Notes</div>
+  <div class="cell empty note-cell" style="color:var(--ch-yt);background:rgba(230,57,70,.05)">🎬 Launch Day</div>
+  <div class="cell empty note-cell">Post B</div>
+  <div class="cell empty note-cell">Post C</div>
+  <div class="cell empty note-cell">Post D</div>
+  <div class="cell empty note-cell">Post E + carousel</div>
+  <div class="cell empty note-cell" style="color:var(--ch-nl);background:rgba(212,175,55,.05)">📬 Newsletter</div>
+  <div class="cell empty note-cell">Analytics</div>
+
+</div></div>
+
+<div style="text-align:right;padding:4px 14px 0;font-size:10px;color:var(--vib-text-light)" id="savedTs2"></div>
+<div class="log-sec">
+  <div class="log-hdr">Activity Log</div>
+  <div class="log-list" id="logList">
+    <div class="log-e"><span class="log-t" id="initTs">–</span><span class="log-m" style="color:var(--vib-text-light)">Dashboard initialized · Week 3 · Mon 22 – Sun 28 Jun 2026</span></div>
+  </div>
+</div>
+
+<div class="overlay" id="ov" onclick="ovClick(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <button class="modal-x" onclick="closeModal()">✕</button>
+      <h2 id="mTitle">–</h2>
+      <div class="m-meta" id="mMeta">–</div>
+    </div>
+    <div class="modal-body">
+      <div class="fld"><label>Status</label>
+        <select id="mStatus">
+          <option value="scheduled">⏱ Scheduled</option>
+          <option value="in-progress">↻ In Progress</option>
+          <option value="published">✓ Published</option>
+          <option value="delayed">⚠ Delayed</option>
+          <option value="pending">! To Do</option>
+          <option value="draft">○ Draft</option>
+        </select>
+      </div>
+      <div class="fld"><label>Live URL (after publishing)</label><input type="url" id="mUrl" placeholder="https://…" /></div>
+      <div class="fld"><label>Notes / Blockers</label><textarea id="mNotes" placeholder="Record delays, changes, observations…"></textarea></div>
+      <div class="m-actions">
+        <button class="btn btn-p" onclick="saveModal()">Save Update</button>
+        <button class="btn btn-s" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TASKS = {
+  'yt1':    {title:'YouTube Video · LIVE',                   meta:'The Governance That Lets Banks Move Fast · The 4 Stone Guardians', ch:'YouTube'},
+  'li-a':   {title:'LinkedIn Post A · Story',                meta:'Mon 22 Jun · after 6:00 AM Hanoi · DBS 15→3 months · governance as a road', ch:'LinkedIn'},
+  'li-b':   {title:'LinkedIn Post B · Stat',                 meta:'Tue 23 Jun · 8:00 AM · DORA 2.6× · manual CABs', ch:'LinkedIn'},
+  'li-c':   {title:'LinkedIn Post C · Question',             meta:'Wed 24 Jun · 8:00 AM · Which guardian is your bank missing?', ch:'LinkedIn'},
+  'li-d':   {title:'LinkedIn Post D · Hot-take',             meta:'Thu 25 Jun · 8:00 AM · The committee is the bottleneck', ch:'LinkedIn'},
+  'li-e':   {title:'LinkedIn Post E · Framework + Carousel', meta:'Fri 26 Jun · 8:00 AM · Gate · Guardrail · Ledger · Owner (7-slide)', ch:'LinkedIn'},
+  'lp-a':   {title:'LI Page · Re-share Post A',              meta:'Mon 22 Jun · 11:00 AM · Brand voice · link in first comment', ch:'LI Page'},
+  'lp-b':   {title:'LI Page · Re-share Post B',              meta:'Tue 23 Jun · 11:00 AM · Brand voice · Stat', ch:'LI Page'},
+  'lp-c':   {title:'LI Page · Re-share Post C',              meta:'Wed 24 Jun · 3:00 PM · Brand voice · Question + article', ch:'LI Page'},
+  'lp-d':   {title:'LI Page · Re-share Post D',              meta:'Thu 25 Jun · 12:00 PM · Brand voice · Hot-take', ch:'LI Page'},
+  'lp-e':   {title:'LI Page · Re-share Post E',              meta:'Fri 26 Jun · 3:00 PM · Brand voice · Framework + carousel', ch:'LI Page'},
+  'lp-sat': {title:'LI Page · Newsletter Teaser',            meta:'Sat 27 Jun · 9:00 AM · Drive to Issue #003 sign-up', ch:'LI Page'},
+  'lp-sun': {title:'LI Page · Re-share Best Post',           meta:'Sun 28 Jun · 10:00 AM · Pull analytics · pick top performer', ch:'LI Page'},
+  'web1':   {title:'Website SEO Article',                    meta:'Mon 22 Jun · 9:00 AM · /insights/4-stone-guardians · voice 92', ch:'Website'},
+  'dl1':    {title:'The 4 Stone Guardians — 5-Page Playbook',meta:'Lead magnet · 5-page PDF · register-free download', ch:'Website'},
+  'nl1':    {title:'Newsletter Issue #003',                  meta:'Sat 27 Jun · 8:00 AM · The AI Architect Letter · The Velocity of Control', ch:'Newsletter'},
+  'prod1':  {title:'Render Video + VO Master',               meta:'DONE · 64 clips · unified VO · video LIVE', ch:'Production'},
+  'reg1':   {title:'Governance + FACT-CHECK',                meta:'DONE · 9/9 governance PASS · SR 26-2 · EU Art-12 · Decree 356/2025 · EU-date cleared', ch:'Production'},
+};
+
+const SM = {
+  'published':{lbl:'✓ Published',css:'b-published'},
+  'scheduled':{lbl:'⏱ Scheduled',css:'b-scheduled'},
+  'in-progress':{lbl:'↻ In Progress',css:'b-in-progress'},
+  'delayed':{lbl:'⚠ Delayed',css:'b-delayed'},
+  'pending':{lbl:'! To Do',css:'b-pending'},
+  'draft':{lbl:'○ Draft',css:'b-draft'},
+};
+
+const CONTENT_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','web1','dl1','nl1'];
+
+const SEED = {
+  'yt1':    {status:'published', url:'https://youtu.be/7o6YDoc5bf4', notes:'LIVE · https://youtu.be/7o6YDoc5bf4'},
+  'li-a':   {status:'draft',     url:'', notes:'DRAFTED on LinkedIn with image (Week3-postA-captioned.png) · voice 95 · governance PASS · publish Mon 22 Jun after 6AM Hanoi · first comment ready (video live) · urn:li:share:7474142384470089728'},
+  'li-b':   {status:'scheduled', url:'', notes:''},
+  'li-c':   {status:'scheduled', url:'', notes:''},
+  'li-d':   {status:'scheduled', url:'', notes:''},
+  'li-e':   {status:'scheduled', url:'', notes:'Framework + 7-slide carousel · link in first comment'},
+  'lp-a':   {status:'scheduled', url:'', notes:''},
+  'lp-b':   {status:'scheduled', url:'', notes:''},
+  'lp-c':   {status:'scheduled', url:'', notes:''},
+  'lp-d':   {status:'scheduled', url:'', notes:''},
+  'lp-e':   {status:'scheduled', url:'', notes:''},
+  'lp-sat': {status:'scheduled', url:'', notes:''},
+  'lp-sun': {status:'scheduled', url:'', notes:'Pull Mon–Fri analytics first · pick top-performing post'},
+  'web1':   {status:'scheduled', url:'', notes:'voice 92 · governance PASS · .md + ABA-dark .html/.pdf ready'},
+  'dl1':    {status:'scheduled', url:'', notes:'READY — 5-page 4 Stone Guardians playbook PDF (16-…) · register-free gate'},
+  'nl1':    {status:'scheduled', url:'', notes:'READY — Issue #003 · voice 92 · email-HTML ready'},
+  'prod1':  {status:'published', url:'https://youtu.be/7o6YDoc5bf4', notes:'DONE — 64 clips + VO master · video LIVE'},
+  'reg1':   {status:'published', url:'', notes:'DONE — governance 9/9 PASS · FACT-CHECK F4 · EU Aug-2026 date cleared (VO cites Art-12 record-keeping)'},
+};
+
+const PUBLISHED_IDS = ['yt1','prod1','reg1'];
+
+let state = {};
+try {
+  const s = localStorage.getItem('aba-w3-v1');
+  if (s) {
+    state = JSON.parse(s);
+    PUBLISHED_IDS.forEach(id => { if (!state[id] || state[id].status==='scheduled' || state[id].status==='pending') state[id]=JSON.parse(JSON.stringify(SEED[id])); });
+  } else { state = JSON.parse(JSON.stringify(SEED)); }
+} catch(e) { state = JSON.parse(JSON.stringify(SEED)); }
+Object.keys(TASKS).forEach(id => { if (!state[id]) state[id]=JSON.parse(JSON.stringify(SEED[id]||{status:'scheduled',url:'',notes:''})); });
+
+let cur = null;
+function persist() {
+  try { localStorage.setItem('aba-w3-v1', JSON.stringify(state)); } catch(e){}
+  const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.getElementById('savedTs').textContent='Last updated: '+ts;
+  document.getElementById('savedTs2').textContent='Last updated: '+ts;
+}
+function highlightToday() {
+  const n=new Date(), map={'2026-5-22':0,'2026-5-23':1,'2026-5-24':2,'2026-5-25':3,'2026-5-26':4,'2026-5-27':5,'2026-5-28':6};
+  const k=`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}`;
+  if (map[k]!==undefined){const el=document.getElementById('dh'+map[k]);if(el)el.classList.add('today');}
+}
+function render() {
+  let pub=0,delay=0,total=Object.keys(TASKS).length;
+  Object.entries(state).forEach(([id,d])=>{
+    const b=document.getElementById('b-'+id); if(!b) return;
+    const s=SM[d.status]||SM['scheduled'];
+    b.textContent=s.lbl; b.className='badge '+s.css;
+    if(d.status==='published')pub++; if(d.status==='delayed')delay++;
+  });
+  document.getElementById('cTotal').textContent=total;
+  document.getElementById('cPub').textContent=pub;
+  document.getElementById('cSched').textContent=Math.max(0,total-pub-delay);
+  document.getElementById('cDelay').textContent=delay;
+  const cp=CONTENT_IDS.filter(id=>state[id]&&state[id].status==='published').length;
+  const pct=Math.round(cp/CONTENT_IDS.length*100);
+  document.getElementById('pPct').textContent=pct+'%';
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pDetail').textContent=`${cp} of ${CONTENT_IDS.length} content assets published`;
+}
+function openModal(id){ cur=id; const t=TASKS[id],d=state[id];
+  document.getElementById('mTitle').textContent=t.title;
+  document.getElementById('mMeta').textContent=t.meta;
+  document.getElementById('mStatus').value=d.status;
+  document.getElementById('mUrl').value=d.url||'';
+  document.getElementById('mNotes').value=d.notes||'';
+  document.getElementById('ov').classList.add('open');
+}
+function closeModal(){document.getElementById('ov').classList.remove('open');cur=null;}
+function ovClick(e){if(e.target===document.getElementById('ov'))closeModal();}
+function saveModal(){ if(!cur)return;
+  const prev=state[cur].status,next=document.getElementById('mStatus').value;
+  state[cur]={status:next,url:document.getElementById('mUrl').value.trim(),notes:document.getElementById('mNotes').value.trim()};
+  persist();render();
+  if(prev!==next) addLog(`${TASKS[cur].title} → <strong>${SM[next].lbl}</strong>`);
+  closeModal();
+}
+function addLog(html,fixedTs){ const list=document.getElementById('logList'),e=document.createElement('div');
+  e.className='log-e';
+  const ts=fixedTs||new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  e.innerHTML=`<span class="log-t">${ts}</span><span class="log-m">${html}</span>`;
+  list.insertBefore(e,list.children[1]||null);
+}
+document.getElementById('initTs').textContent=new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+highlightToday(); render(); persist();
+</script>
+</body>
+</html>
