@@ -28,7 +28,11 @@
   .card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--gray);}
   .card.ready::before{background:var(--gradient);}
   .card.active::before{background:var(--success);}
-  .card.ready:hover,.card.active:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,26,61,.12);border-color:var(--orange);}
+  .card.done::before{background:#2f8f6f;}
+  .card.prep::before{background:#b07cff;}
+  .card.ready:hover,.card.active:hover,.card.done:hover,.card.prep:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,26,61,.12);border-color:var(--orange);}
+  .card.done{opacity:.9;}
+  .card.prep{opacity:.78;}
   .card.soon{opacity:.62;cursor:not-allowed;}
   .card-wk{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-light);}
   .card-n{font-size:30px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em;}
@@ -37,7 +41,9 @@
   .card-date{font-size:10.5px;color:var(--text-light);margin-top:2px;}
   .pill{position:absolute;top:14px;right:13px;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:10px;}
   .pill-active{background:rgba(42,157,143,.15);color:var(--success);border:1px solid rgba(42,157,143,.35);}
+  .pill-done{background:rgba(47,143,111,.15);color:#2f8f6f;border:1px solid rgba(47,143,111,.4);}
   .pill-ready{background:rgba(212,175,55,.14);color:#a06800;border:1px solid rgba(212,175,55,.4);}
+  .pill-prep{background:rgba(176,124,255,.14);color:#7a4fd0;border:1px solid rgba(176,124,255,.4);}
   .pill-soon{background:var(--gray);color:var(--text-light);}
 
   .foot{margin-top:30px;font-size:11px;color:var(--text-light);border-top:1px solid var(--gray);padding-top:14px;line-height:1.7;}
@@ -48,8 +54,12 @@
   .card-wk{color:#7fb0ff;}
   .card-fw{color:#E6C457;}
   .pill-active{background:rgba(52,211,153,.16);color:#34d399;border:1px solid rgba(52,211,153,.4);}
+  .pill-done{background:rgba(52,211,153,.10);color:#7fd9bb;border:1px solid rgba(52,211,153,.3);}
   .pill-ready{background:rgba(212,175,55,.16);color:#E6C457;border:1px solid rgba(212,175,55,.5);}
+  .pill-prep{background:rgba(176,124,255,.16);color:#c9a9ff;border:1px solid rgba(176,124,255,.45);}
   .pill-soon{background:rgba(255,255,255,.06);color:#93a7c7;}
+  .card.done::before{background:#34d399;}
+  .card.prep::before{background:#b07cff;}
   .card{box-shadow:0 2px 16px rgba(0,0,0,.5);}
 </style>
 </head>
@@ -59,6 +69,7 @@
   <div class="vib-badge">AI Business Architect</div>
   <h1>Publishing Dashboards</h1>
   <div class="sub">One dashboard per week — click a week to open its publishing schedule. New issue every Saturday.</div>
+  <div class="sub" id="refreshed" style="opacity:.62;margin-top:4px;"></div>
 </div>
 
 <div class="wrap">
@@ -67,7 +78,9 @@
 
   <div class="foot">
     <strong>Legend:</strong> <span style="color:var(--success);font-weight:700;">● This week</span> ·
+    <span style="color:#7fd9bb;font-weight:700;">● Published</span> ·
     <span style="color:#a06800;font-weight:700;">● Ready</span> ·
+    <span style="color:#c9a9ff;font-weight:700;">● In prep</span> ·
     <span style="color:var(--text-light);font-weight:700;">● Planned</span> ·
     <span style="color:#ff5d5d;font-weight:700;">▶ YouTube</span> publishes every <strong>Monday · 05:00 (UTC+7)</strong> — week anchor.<br>
     Independent thought leadership · not affiliated with any current or past employer · compliant with Vietnam AI Law 134/2025 + PDPL.
@@ -87,9 +100,9 @@ const META = {
   3:  {topic:'The Governance That Lets Banks Move Fast',                     fw:'The 4 Stone Guardians', file:'week3-publishing-schedule-dashboard.html'},
   4:  {topic:"Most Banking AI Is Deployed Where the Money Isn't",            fw:'The Visibility Trap (3 Value Zones)', file:'week4-publishing-schedule-dashboard.html'},
   5:  {topic:'Why Two Banks Buy the Same AI and Only One Gets the Return',   fw:'The Operating-Model Multiplier (3 levers)', file:'week5-publishing-schedule-dashboard.html'},
-  6:  {topic:'Stop Building Your Own Banking AI',                            fw:'The Build-Buy-Partner Grid'},
-  7:  {topic:'One Human, Thirty Agents: the Next Bank Operating Model',      fw:'The Agent Army Operating Model'},
-  8:  {topic:'Stop Funding AI Pilots — Run the Portfolio Test',             fw:'The AI Use-Case Portfolio'},
+  6:  {topic:'Stop Building Your Own Banking AI',                            fw:'The Build-Buy-Partner Grid', file:'week6-publishing-schedule-dashboard.html'},
+  7:  {topic:'One Human, Thirty Agents: the Next Bank Operating Model',      fw:'The Agent Army Operating Model', file:'week7-publishing-schedule-dashboard.html'},
+  8:  {topic:'Stop Funding AI Pilots — Run the Portfolio Test',             fw:'The AI Use-Case Portfolio', prep:true},
   9:  {topic:"Your Data Isn't AI-Ready — and No Model Will Fix That",        fw:'AI-Ready Business Architecture'},
   10: {topic:"Vietnam's AI Law Hits March 2026 — Are You Ready?",           fw:'Regulatory Readiness Map'},
   11: {topic:'Your AI Model-Risk Framework Has a GenAI Hole',               fw:'Model-Risk Tiering Grid (GenAI-extended)'},
@@ -124,14 +137,17 @@ const today = new Date(); today.setHours(0,0,0,0);
 const diffDays = Math.floor((today - START) / 86400000);
 const curWeek  = diffDays >= 0 ? Math.floor(diffDays/7)+1 : 0;
 
-const PILL = {active:['pill-active','This week'], ready:['pill-ready','Ready'], soon:['pill-soon','Planned']};
+const PILL = {active:['pill-active','This week'], done:['pill-done','Published'], ready:['pill-ready','Ready'], prep:['pill-prep','In prep'], soon:['pill-soon','Planned']};
 
 const grid = document.getElementById('grid');
 for (let n=1; n<=TOTAL; n++){
   const meta   = META[n];
   const hasFile= !!(meta && meta.file);
   const isCur  = (n === curWeek);
-  const status = isCur ? 'active' : (hasFile ? 'ready' : 'soon');
+  const isPast = (n < curWeek);
+  const status = isCur ? 'active'
+               : hasFile ? (isPast ? 'done' : 'ready')
+               : (meta && meta.prep) ? 'prep' : 'soon';
   const href   = hasFile ? meta.file : ('week-coming-soon.html?w='+n);
   const topic  = (meta && meta.topic) ? meta.topic
                : '<span style="color:#aab4c4;font-style:italic;font-weight:400;">Topic to be planned</span>';
@@ -150,6 +166,15 @@ for (let n=1; n<=TOTAL; n++){
     `<span class="card-date">${fmtRange(mondayOf(n))}</span>`;
   grid.appendChild(el);
 }
+
+// Last-refreshed stamp + live programme position
+(function(){
+  const fmt = today.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const pos = curWeek>=1 && curWeek<=TOTAL
+    ? `Currently in Week ${curWeek} of ${TOTAL}` : 'Programme not yet started';
+  const el = document.getElementById('refreshed');
+  if (el) el.textContent = `Status refreshed ${fmt} · ${pos}`;
+})();
 </script>
 </body>
 </html>
