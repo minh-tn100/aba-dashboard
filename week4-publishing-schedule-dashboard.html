@@ -142,7 +142,7 @@
   <!-- YouTube -->
   <div class="ch-lbl" style="color:var(--ch-yt)">YouTube</div>
   <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
-  <div class="cell"><div class="task ch-yt" onclick="openModal('yt1')"><div class="t-time">○ PENDING</div><div class="t-title">Most Banking AI Is Deployed Where the Money Isn't</div><div class="t-sub">Video · The Visibility Trap</div><div class="t-bw"><span class="badge" id="b-yt1"></span></div></div></div>
+  <div class="cell"><div class="task ch-yt" onclick="openModal('yt1')"><div class="t-time">✓ LIVE</div><div class="t-title"><a href="https://youtu.be/L37oZW3dY5g" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">Most Banking AI Is Deployed Where the Money Isn't</a></div><div class="t-sub">Video · The Visibility Trap · Banking AI, Made Auditable</div><div class="t-bw"><span class="badge" id="b-yt1"></span></div></div></div>
   <div class="cell empty"></div><div class="cell empty"></div>
   <!-- LinkedIn Personal -->
   <div class="ch-lbl" style="color:var(--ch-li)">LinkedIn</div>
@@ -173,10 +173,10 @@
   <div class="cell empty"></div>
   <!-- Production -->
   <div class="ch-lbl" style="color:var(--ch-setup)">Prod</div>
-  <div class="cell"><div class="task ch-setup" onclick="openModal('prod1')"><div class="t-time">○ PENDING</div><div class="t-title">Render video + VO master</div><div class="t-sub">64 clips · VO master (locked budget) · NOT yet rendered</div><div class="t-bw"><span class="badge" id="b-prod1"></span></div></div></div>
+  <div class="cell"><div class="task ch-setup" onclick="openModal('prod1')"><div class="t-time">✓ DONE</div><div class="t-title">Render video + VO master</div><div class="t-sub">64 clips · VO master · Published Fri 27 Jun</div><div class="t-bw"><span class="badge" id="b-prod1"></span></div></div></div>
   <div class="cell"><div class="task ch-setup" onclick="openModal('reg1')"><div class="t-time">✓ DONE</div><div class="t-title">Govern + FACT-CHECK</div><div class="t-sub">12/13 PASS · 1 G3 review (title) accept · self-test 9/9</div><div class="t-bw"><span class="badge" id="b-reg1"></span></div></div></div>
   <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
-  <div class="cell" style="grid-column:span 2"><div class="blocker-banner" style="color:#E6C457;border-color:rgba(212,175,55,.5);background:rgba(212,175,55,.08);">✓ Content pack COMPLETE (13 assets · gov 12/13 + 1 G3 accept) · ⏳ awaiting VEO render + VO record + image renders · founder G3 sign-off pending</div></div>
+  <div class="cell" style="grid-column:span 2"><div class="blocker-banner" style="color:#34d399;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08);">✓ YouTube video LIVE — youtu.be/L37oZW3dY5g · Gov 12/13 PASS (1 G3 accept) · LinkedIn posts A–E scheduled from Mon 29 Jun</div></div>
   <!-- Notes -->
   <div class="ch-lbl" style="font-size:9px">Notes</div>
   <div class="cell empty note-cell" style="color:var(--ch-li);background:rgba(30,144,255,.05)">🎬 Post A</div>
@@ -191,7 +191,7 @@
 <div class="log-sec">
   <div class="log-hdr">Activity Log</div>
   <div class="log-list" id="logList">
-    <div class="log-e"><span class="log-t" id="initTs">–</span><span class="log-m" style="color:var(--vib-text-light)">Dashboard initialized · Week 4 · Mon 29 Jun – Sun 5 Jul 2026 · The Visibility Trap</span></div>
+    <div class="log-e"><span class="log-t" id="initTs">–</span><span class="log-m" style="color:var(--vib-text-light)">Dashboard v2 · Week 4 · Mon 29 Jun – Sun 5 Jul 2026 · YouTube video LIVE youtu.be/L37oZW3dY5g</span></div>
   </div>
 </div>
 <div class="overlay" id="ov" onclick="ovClick(event)">
@@ -207,7 +207,7 @@
 </div>
 <script>
 const TASKS = {
-  'yt1':{title:'YouTube Video',meta:"Most Banking AI Is Deployed Where the Money Isn't · The Visibility Trap · awaiting render",ch:'YouTube'},
+  'yt1':{title:'YouTube Video',meta:"Most Banking AI Is Deployed Where the Money Isn't · The Visibility Trap · LIVE youtu.be/L37oZW3dY5g",ch:'YouTube'},
   'li-a':{title:'LinkedIn Post A · Story',meta:'Mon 29 Jun · 9:00 · the loss that never happened',ch:'LinkedIn'},
   'li-b':{title:'LinkedIn Post B · Stat',meta:'Tue 30 Jun · 9:00 · $200–340B · ~$1.5B Zone 2 · Gartner >40%',ch:'LinkedIn'},
   'li-c':{title:'LinkedIn Post C · Question',meta:'Wed 1 Jul · 9:00 · Which zone is your AI budget in?',ch:'LinkedIn'},
@@ -227,7 +227,7 @@ const TASKS = {
 const SM = {'published':{lbl:'✓ Published',css:'b-published'},'scheduled':{lbl:'⏱ Scheduled',css:'b-scheduled'},'in-progress':{lbl:'↻ In Progress',css:'b-in-progress'},'delayed':{lbl:'⚠ Delayed',css:'b-delayed'},'pending':{lbl:'! To Do',css:'b-pending'},'draft':{lbl:'○ Draft',css:'b-draft'}};
 const CONTENT_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','web1','dl1','nl1'];
 const SEED = {
-  'yt1':{status:'scheduled',url:'',notes:'Pack complete; awaiting VEO render + VO record'},
+  'yt1':{status:'published',url:'https://youtu.be/L37oZW3dY5g',notes:'LIVE — Published Fri 27 Jun 2026 · Playlist: Banking AI, Made Auditable'},
   'li-a':{status:'scheduled',url:'',notes:'voice 92 · governance PASS · image prompt ready (18)'},
   'li-b':{status:'scheduled',url:'',notes:'voice 91 · governance PASS'},
   'li-c':{status:'scheduled',url:'',notes:'voice 95 · governance PASS'},
@@ -241,15 +241,15 @@ const SEED = {
   'web1':{status:'scheduled',url:'',notes:'voice 99 · governance PASS · .md + ABA-dark .html/.pdf ready'},
   'dl1':{status:'scheduled',url:'',notes:'READY — 5-page Visibility Trap playbook PDF (16)'},
   'nl1':{status:'scheduled',url:'',notes:'READY — Issue #004 · voice 99 · email-HTML · G3 title REVIEW (accept) pending founder sign-off'},
-  'prod1':{status:'pending',url:'',notes:'64 VEO clips + VO record + conform per Act → overlays (12). Not started.'},
+  'prod1':{status:'published',url:'https://youtu.be/L37oZW3dY5g',notes:'DONE — rendered + published Fri 27 Jun 2026'},
   'reg1':{status:'published',url:'',notes:'DONE — P01.11 governance 12/13 PASS + 1 G3 REVIEW accepted · FACT-CHECK F4'}
 };
-const PUBLISHED_IDS = ['reg1'];
+const PUBLISHED_IDS = ['reg1','yt1','prod1'];
 let state = {};
-try { const s = localStorage.getItem('aba-w4-v1'); if (s) { state = JSON.parse(s); PUBLISHED_IDS.forEach(id => { if (!state[id] || state[id].status==='scheduled' || state[id].status==='pending') state[id]=JSON.parse(JSON.stringify(SEED[id])); }); } else { state = JSON.parse(JSON.stringify(SEED)); } } catch(e) { state = JSON.parse(JSON.stringify(SEED)); }
+try { const s = localStorage.getItem('aba-w4-v2'); if (s) { state = JSON.parse(s); PUBLISHED_IDS.forEach(id => { if (!state[id] || state[id].status==='scheduled' || state[id].status==='pending') state[id]=JSON.parse(JSON.stringify(SEED[id])); }); } else { state = JSON.parse(JSON.stringify(SEED)); } } catch(e) { state = JSON.parse(JSON.stringify(SEED)); }
 Object.keys(TASKS).forEach(id => { if (!state[id]) state[id]=JSON.parse(JSON.stringify(SEED[id]||{status:'scheduled',url:'',notes:''})); });
 let cur = null;
-function persist() { try { localStorage.setItem('aba-w4-v1', JSON.stringify(state)); } catch(e){} const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); document.getElementById('savedTs').textContent='Last updated: '+ts; document.getElementById('savedTs2').textContent='Last updated: '+ts; }
+function persist() { try { localStorage.setItem('aba-w4-v2', JSON.stringify(state)); } catch(e){} const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); document.getElementById('savedTs').textContent='Last updated: '+ts; document.getElementById('savedTs2').textContent='Last updated: '+ts; }
 function highlightToday() { const n=new Date(), map={'2026-5-29':0, '2026-5-30':1, '2026-6-1':2, '2026-6-2':3, '2026-6-3':4, '2026-6-4':5, '2026-6-5':6}; const k=`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}`; if (map[k]!==undefined){const el=document.getElementById('dh'+map[k]);if(el)el.classList.add('today');} }
 function render() { let pub=0,delay=0,total=Object.keys(TASKS).length; Object.entries(state).forEach(([id,d])=>{ const b=document.getElementById('b-'+id); if(!b) return; const s=SM[d.status]||SM['scheduled']; b.textContent=s.lbl; b.className='badge '+s.css; if(d.status==='published')pub++; if(d.status==='delayed')delay++; }); document.getElementById('cTotal').textContent=total; document.getElementById('cPub').textContent=pub; document.getElementById('cSched').textContent=Math.max(0,total-pub-delay); document.getElementById('cDelay').textContent=delay; const cp=CONTENT_IDS.filter(id=>state[id]&&state[id].status==='published').length; const pct=Math.round(cp/CONTENT_IDS.length*100); document.getElementById('pPct').textContent=pct+'%'; document.getElementById('pFill').style.width=pct+'%'; document.getElementById('pDetail').textContent=`${cp} of ${CONTENT_IDS.length} content assets published`; }
 function openModal(id){ cur=id; const t=TASKS[id],d=state[id]; document.getElementById('mTitle').textContent=t.title; document.getElementById('mMeta').textContent=t.meta; document.getElementById('mStatus').value=d.status; document.getElementById('mUrl').value=d.url||''; document.getElementById('mNotes').value=d.notes||''; document.getElementById('ov').classList.add('open'); }
