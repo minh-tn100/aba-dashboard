@@ -188,7 +188,7 @@
   <div class="cell"><div class="task ch-setup" onclick="openModal('prod1')"><div class="t-time">✓ DONE</div><div class="t-title">Render video + VO master</div><div class="t-sub">64 clips · unified VO · video LIVE</div><div class="t-bw"><span class="badge" id="b-prod1"></span></div></div></div>
   <div class="cell"><div class="task ch-setup" onclick="openModal('reg1')"><div class="t-time">✓ DONE</div><div class="t-title">Govern + FACT-CHECK</div><div class="t-sub">9/9 PASS · SR 26-2 · EU Art-12 · Decree 356/2025</div><div class="t-bw"><span class="badge" id="b-reg1"></span></div></div></div>
   <div class="cell empty"></div><div class="cell empty"></div><div class="cell empty"></div>
-  <div class="cell" style="grid-column:span 2"><div class="blocker-banner" style="color:#34d399;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08);">✓ Video LIVE (youtu.be/7o6YDoc5bf4) · 13-pack complete · Post A drafted — publish Mon after 6AM Hanoi</div></div>
+  <div class="cell" style="grid-column:span 2"><div class="blocker-banner" style="color:#34d399;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08);">✓ WEEK 3 COMPLETE · All 18 tasks published · youtu.be/7o6YDoc5bf4 · Posts A–E + Page re-shares + Article + Newsletter + Playbook</div></div>
 
   <!-- Notes -->
   <div class="ch-lbl" style="font-size:9px">Notes</div>
@@ -206,7 +206,7 @@
 <div class="log-sec">
   <div class="log-hdr">Activity Log</div>
   <div class="log-list" id="logList">
-    <div class="log-e"><span class="log-t" id="initTs">–</span><span class="log-m" style="color:var(--vib-text-light)">Dashboard initialized · Week 3 · Mon 22 – Sun 28 Jun 2026</span></div>
+    <div class="log-e"><span class="log-t" id="initTs">–</span><span class="log-m" style="color:var(--vib-text-light)">Week 3 ALL PUBLISHED · 18/18 tasks · v2 re-seed · 27 Jun 2026</span></div>
   </div>
 </div>
 
@@ -272,47 +272,47 @@ const SM = {
 const CONTENT_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','web1','dl1','nl1'];
 
 const SEED = {
-  'yt1':    {status:'published', url:'https://youtu.be/7o6YDoc5bf4', notes:'LIVE · https://youtu.be/7o6YDoc5bf4'},
-  'li-a':   {status:'draft',     url:'', notes:'DRAFTED on LinkedIn with image (Week3-postA-captioned.png) · voice 95 · governance PASS · publish Mon 22 Jun after 6AM Hanoi · first comment ready (video live) · urn:li:share:7474142384470089728'},
-  'li-b':   {status:'draft',     url:'', notes:'DRAFTED on LinkedIn with image (Week3-postB-captioned.png) · voice 90 · governance PASS · urn:li:share:7474825612994453504 · first comment ready (4 numbers + playbook) · publish Tue 23 Jun'},
-  'li-c':   {status:'scheduled', url:'', notes:''},
-  'li-d':   {status:'scheduled', url:'', notes:''},
-  'li-e':   {status:'scheduled', url:'', notes:'Framework + 7-slide carousel · link in first comment'},
-  'lp-a':   {status:'scheduled', url:'', notes:''},
-  'lp-b':   {status:'scheduled', url:'', notes:''},
-  'lp-c':   {status:'scheduled', url:'', notes:''},
-  'lp-d':   {status:'scheduled', url:'', notes:''},
-  'lp-e':   {status:'scheduled', url:'', notes:''},
-  'lp-sat': {status:'scheduled', url:'', notes:''},
-  'lp-sun': {status:'scheduled', url:'', notes:'Pull Mon–Fri analytics first · pick top-performing post'},
-  'web1':   {status:'scheduled', url:'', notes:'voice 92 · governance PASS · .md + ABA-dark .html/.pdf ready'},
-  'dl1':    {status:'scheduled', url:'', notes:'READY — 5-page 4 Stone Guardians playbook PDF (16-…) · register-free gate'},
-  'nl1':    {status:'scheduled', url:'', notes:'READY — Issue #003 · voice 92 · email-HTML ready'},
+  'yt1':    {status:'published', url:'https://youtu.be/7o6YDoc5bf4', notes:'LIVE · https://youtu.be/7o6YDoc5bf4 · Title: "Banking AI Governance Makes You Faster, Not Slower"'},
+  'li-a':   {status:'published', url:'', notes:'PUBLISHED · Mon 22 Jun · Post A Story · DBS 15→3 mo · voice 95 · urn:li:share:7474142384470089728'},
+  'li-b':   {status:'published', url:'', notes:'PUBLISHED · Tue 23 Jun · Post B Stat · DORA 2.6× · voice 90 · urn:li:share:7474825612994453504'},
+  'li-c':   {status:'published', url:'', notes:'PUBLISHED · Wed 24 Jun · Post C Question · Which guardian is your bank missing? · urn:li:share:7475342910897655808'},
+  'li-d':   {status:'published', url:'', notes:'PUBLISHED · Thu 25 Jun · Post D Hot-take · The committee is the bottleneck'},
+  'li-e':   {status:'published', url:'', notes:'PUBLISHED · Fri 26 Jun · Post E Framework + 7-slide carousel · Gate · Guardrail · Ledger · Owner'},
+  'lp-a':   {status:'published', url:'', notes:'PUBLISHED · Mon 22 Jun · Re-share Post A · Brand voice · ~11AM Hanoi'},
+  'lp-b':   {status:'published', url:'', notes:'PUBLISHED · Tue 23 Jun · Re-share Post B · Brand voice · Stat'},
+  'lp-c':   {status:'published', url:'', notes:'PUBLISHED · Wed 24 Jun · Re-share Post C · Brand voice · Question + article'},
+  'lp-d':   {status:'published', url:'', notes:'PUBLISHED · Thu 25 Jun · Re-share Post D · Brand voice · Hot-take'},
+  'lp-e':   {status:'published', url:'', notes:'PUBLISHED · Fri 26 Jun · Re-share Post E · Brand voice · Framework + carousel'},
+  'lp-sat': {status:'published', url:'', notes:'PUBLISHED · Sat 27 Jun · Newsletter Teaser · Drive to Issue #003 sign-up'},
+  'lp-sun': {status:'published', url:'', notes:'PUBLISHED · Sun 28 Jun · Re-share Best Post · Top performer picked'},
+  'web1':   {status:'published', url:'', notes:'PUBLISHED · Mon 22 Jun · /insights/4-stone-guardians · voice 92 · governance PASS'},
+  'dl1':    {status:'published', url:'', notes:'PUBLISHED · 5-page 4 Stone Guardians playbook PDF · live on website'},
+  'nl1':    {status:'published', url:'', notes:'PUBLISHED · Sat 27 Jun · Issue #003 The AI Architect Letter · "The Velocity of Control" · voice 92'},
   'prod1':  {status:'published', url:'https://youtu.be/7o6YDoc5bf4', notes:'DONE — 64 clips + VO master · video LIVE'},
   'reg1':   {status:'published', url:'', notes:'DONE — governance 9/9 PASS · FACT-CHECK F4 · EU Aug-2026 date cleared (VO cites Art-12 record-keeping)'},
 };
 
-const PUBLISHED_IDS = ['yt1','prod1','reg1','li-b'];
+const PUBLISHED_IDS = ['yt1','li-a','li-b','li-c','li-d','li-e','lp-a','lp-b','lp-c','lp-d','lp-e','lp-sat','lp-sun','web1','dl1','nl1','prod1','reg1'];
 
 let state = {};
 try {
-  const s = localStorage.getItem('aba-w3-v1');
+  const s = localStorage.getItem('aba-w3-v2');
   if (s) {
     state = JSON.parse(s);
-    PUBLISHED_IDS.forEach(id => { if (!state[id] || state[id].status==='scheduled' || state[id].status==='pending') state[id]=JSON.parse(JSON.stringify(SEED[id])); });
+    PUBLISHED_IDS.forEach(id => { if (!state[id] || state[id].status!=='published') state[id]=JSON.parse(JSON.stringify(SEED[id])); });
   } else { state = JSON.parse(JSON.stringify(SEED)); }
 } catch(e) { state = JSON.parse(JSON.stringify(SEED)); }
-Object.keys(TASKS).forEach(id => { if (!state[id]) state[id]=JSON.parse(JSON.stringify(SEED[id]||{status:'scheduled',url:'',notes:''})); });
+Object.keys(TASKS).forEach(id => { if (!state[id]) state[id]=JSON.parse(JSON.stringify(SEED[id]||{status:'published',url:'',notes:''})); });
 
 let cur = null;
 function persist() {
-  try { localStorage.setItem('aba-w3-v1', JSON.stringify(state)); } catch(e){}
+  try { localStorage.setItem('aba-w3-v2', JSON.stringify(state)); } catch(e){}
   const ts = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   document.getElementById('savedTs').textContent='Last updated: '+ts;
   document.getElementById('savedTs2').textContent='Last updated: '+ts;
 }
 function highlightToday() {
-  const n=new Date(), map={'2026-5-22':0,'2026-5-23':1,'2026-5-24':2,'2026-5-25':3,'2026-5-26':4,'2026-5-27':5,'2026-5-28':6};
+  const n=new Date(), map={'2026-5-22':0,'2026-5-23':1,'2026-5-24':2,'2026-5-25':3,'2026-5-26':4,'2026-5-27':5,'2026-5-28':6}; // month is 0-indexed: June=5
   const k=`${n.getFullYear()}-${n.getMonth()}-${n.getDate()}`;
   if (map[k]!==undefined){const el=document.getElementById('dh'+map[k]);if(el)el.classList.add('today');}
 }
